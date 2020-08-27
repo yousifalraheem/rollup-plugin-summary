@@ -1,23 +1,30 @@
 import commonjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
 import resolve from "rollup-plugin-node-resolve";
-import summary from "./index";
+import externals from "rollup-plugin-node-externals";
+import filesize from "rollup-plugin-filesize";
+import { terser } from "rollup-plugin-terser";
 
 export default {
-    input: "src/index.js",
+    input: "index.js",
+    onwarn(warning, rollupWarn) {
+        if (!["CIRCULAR_DEPENDENCY", "EVAL"].includes(warning.code)) {
+            rollupWarn(warning);
+        }
+    },
     output: {
         dir: "dist",
-        format: "esm",
-        esModule: true,
-        preserveModules: true
+        format: "cjs",
+        sourcemap: true,
+        exports: "auto"
     },
+    external: ["bluebird"],
     plugins: [
-        resolve(),
+        resolve({ preferBuiltins: true }),
         commonjs(),
-        summary({
-            warnLow: 60,
-            warnHigh: 70,
-            totalLow: 170,
-            totalHigh: 180
-        })
+        json(),
+        externals(),
+        filesize(),
+        terser(),
     ]
 }
