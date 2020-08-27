@@ -1,0 +1,22 @@
+{
+  "name": "rollup-plugin-summary",
+  "version": "1.0.0",
+  "description": "A rollup plugin that summarizes the build",
+  "main": "src/index.js",
+  "repository": "https://github.com/yousifalraheem/rollup-plugin-summary.git",
+  "author": "Yousif Al-Raheem <yousifalraheem@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "rollup -c"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "rollup": "^2.26.5",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "dependencies": {
+    "as-table": "^1.0.55",
+    "chalk": "^4.1.0",
+    "rollup-plugin-filesize": "^9.0.2"
+  }
+}
