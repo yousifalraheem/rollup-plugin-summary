@@ -58,3 +58,7 @@ export default {
 ## License
 
 MIT
+
+## Documentation
+
+Read the [documentation](https://yousifalraheem.github.io/rollup-plugin-summary/)
