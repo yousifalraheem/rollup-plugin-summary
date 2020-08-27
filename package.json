@@ -4,6 +4,10 @@
     "description": "A rollup plugin that summarizes the build",
     "main": "index.js",
     "repository": "https://github.com/yousifalraheem/rollup-plugin-summary.git",
+    "homepage": "https://yousifalraheem.github.io/rollup-plugin-summary/",
+    "bugs": {
+        "url": "https://github.com/yousifalraheem/rollup-plugin-summary/issues"
+    },
     "author": "Yousif Al-Raheem <yousifalraheem@gmail.com>",
     "license": "MIT",
     "keywords": [
