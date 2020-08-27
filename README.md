@@ -1,10 +1,12 @@
 # rollup-plugin-summary
-A rollup plugin that summarizes the output of the build. Under the hood, it uses `rollup-plugin-filesize` to calculate file sizes and display them in a tabular form using `as-table` and color it with `chalk`.
+A rollup plugin that summarizes the output of the build. Under the hood, it uses [rollup-plugin-filesize](https://www.npmjs.com/package/rollup-plugin-filesize) to calculate file sizes and display them in a tabular form using [as-table](https://www.npmjs.com/package/as-table) and color it with [chalk](https://www.npmjs.com/package/chalk).
 
 ![](screenshot.png)
 
 ## Installation
+
 <hr/>
+
 ### npm
 
 ```terminal
@@ -16,7 +18,9 @@ npm i rollup-plugin-summary -D
 ```terminal
 yarn add rollup-plugin-summary -D
 ```
+
 <hr/>
+
 ## Usage
 
 File: *`rollup.config.js`*
