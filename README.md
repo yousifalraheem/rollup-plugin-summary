@@ -4,6 +4,7 @@
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=sebgroup/frontend-tools)](https://dependabot.com)
 ![https://img.shields.io/github/languages/top/yousifalraheem/rollup-plugin-summary](https://img.shields.io/github/languages/top/yousifalraheem/rollup-plugin-summary)
 ![https://img.shields.io/npm/l/rollup-plugin-summary](https://img.shields.io/npm/l/rollup-plugin-summary)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/rollup-plugin-summary)
 
 # rollup-plugin-summary
 A rollup plugin that summarizes the output of the build. Under the hood, it uses [rollup-plugin-filesize](https://www.npmjs.com/package/rollup-plugin-filesize) to calculate file sizes and display them in a tabular form using [as-table](https://www.npmjs.com/package/as-table) and color it with [chalk](https://www.npmjs.com/package/chalk).
