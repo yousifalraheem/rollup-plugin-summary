@@ -18,7 +18,7 @@ export default {
         sourcemap: true,
         exports: "auto"
     },
-    external: ["bluebird"],
+    external: ["bluebird", "rollup-plugin-filesize", "as-table", "chalk"],
     plugins: [
         resolve({ preferBuiltins: true }),
         commonjs(),

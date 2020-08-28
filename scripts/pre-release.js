@@ -4,7 +4,7 @@ const pkg = require("../package.json");
 
 const dist = path.resolve(__dirname, "../dist");
 const root = path.resolve(__dirname, "../");
-const unwantedPkgKeys = ["dependencies", "devDependencies", "scripts", "config", "commitlint", "husky", "release"];
+const unwantedPkgKeys = ["devDependencies", "scripts", "config", "commitlint", "husky", "release"];
 
 function writePackage() {
     unwantedPkgKeys.map(key => { delete pkg[key] });

@@ -51,6 +51,11 @@
         "chalk": "^4.1.0",
         "rollup-plugin-filesize": "^9.0.2"
     },
+    "peerDependencies": {
+        "as-table": "^1.0.55",
+        "chalk": "^4.1.0",
+        "rollup-plugin-filesize": "^9.0.2"
+    },
     "config": {
         "commitizen": {
             "path": "./node_modules/cz-conventional-changelog"
