@@ -12,6 +12,7 @@ function writePackage() {
 }
 
 function copyFiles() {
+    fs.copyFileSync(path.resolve(root, "index.d.ts"), path.resolve(dist, "index.d.ts"));
     fs.copyFileSync(path.resolve(root, "README.md"), path.resolve(dist, "README.md"));
     fs.copyFileSync(path.resolve(root, "LICENSE"), path.resolve(dist, "LICENSE"));
 }

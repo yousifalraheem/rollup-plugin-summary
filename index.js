@@ -11,7 +11,7 @@ function colorize(value, color) {
 }
 
 function calculateByteSize(value) {
-    const [num, unit] = value.split(" ");
+    let [num, unit] = value.split(" ");
     switch (unit) {
         case "B": return parseFloat(num);
         case "KB": return parseFloat(num) * 1e3;
@@ -19,14 +19,18 @@ function calculateByteSize(value) {
     }
 }
 
+function toReadableNumber(num) {
+    return num.toLocaleString("en", { maximumFractionDigits: 2 });
+}
+
 function getReadableSize({ value, isTotal, warnLow, warnHigh, totalLow, totalHigh } = {}) {
     let result;
     value = parseFloat(value);
     // File size unit
     switch (true) {
-        case value < 1e3: result = value.toFixed() + " B"; break;
-        case value >= 1e3 && value < 1e6: result = value.toFixed() + " KB"; break;
-        case value >= 1e6 && value < 1e9: result = value.toFixed() + " MB"; break;
+        case value < 1e3: result = toReadableNumber(value) + " B"; break;
+        case value >= 1e3 && value < 1e6: result = toReadableNumber(value / 1e3) + " KB"; break;
+        case value >= 1e6 && value < 1e9: result = toReadableNumber(value / 1e6) + " MB"; break;
         default: result = String(value.toFixed());
     }
 
@@ -42,11 +46,11 @@ let totalMinified = 0;
 let totalGzipped = 0;
 
 export default function (options) {
-    const defaultOptions = options || {
-        warnLow: 5e3,
-        warnHigh: 1e4,
-        totalLow: 2e5,
-        totalHigh: 3e5
+    const defaultOptions = {
+        warnLow: options && options.warnLow || 5e3,
+        warnHigh: options && options.warnHigh || 1e4,
+        totalLow: options && options.totalLow || 2e5,
+        totalHigh: options && options.totalHigh || 3e5
     };
 
     return {
@@ -62,9 +66,9 @@ export default function (options) {
                     // Archiving entries
                     sizes.push({
                         Name: fileName,
-                        Size: getReadableSize({ value: bundleSize.split(" ")[0], ...defaultOptions }),
-                        Minified: getReadableSize({ value: minSize.split(" ")[0], ...defaultOptions }),
-                        Gzipped: getReadableSize({ value: gzipSize.split(" ")[0], ...defaultOptions }),
+                        Size: getReadableSize({ value: calculateByteSize(bundleSize), ...defaultOptions }),
+                        Minified: getReadableSize({ value: calculateByteSize(minSize), ...defaultOptions }),
+                        Gzipped: getReadableSize({ value: calculateByteSize(gzipSize), ...defaultOptions }),
                     });
                 }
             }).generateBundle(...args);

@@ -16,7 +16,7 @@ export default {
         dir: "dist",
         format: "cjs",
         sourcemap: true,
-        exports: "auto"
+        exports: "default"
     },
     external: ["bluebird", "rollup-plugin-filesize", "as-table", "chalk"],
     plugins: [

@@ -1,6 +1,6 @@
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "rollup-plugin-node-resolve";
-import summary from "./index";
+import summary from "./index.js";
 
 export default {
     input: "src/index.js",
@@ -18,6 +18,6 @@ export default {
             warnHigh: 70,
             totalLow: 170,
             totalHigh: 180
-        })
+        }),
     ]
 }
