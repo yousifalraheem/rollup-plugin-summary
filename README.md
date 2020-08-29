@@ -43,23 +43,16 @@ export default {
 }
 ```
 
+<!-- REMOVE -->
+
 <hr/>
 
-## Options
+## Documentation
 
-| Name      | Type   | Description                                             | Default |
-|-----------|--------|---------------------------------------------------------|---------|
-| warnLow   | number | Minimum size in bytes to be highlighted in yellow       | 5000    |
-| warnHigh  | number | Minimum size in bytes to be highlighted in red          | 10000   |
-| totalLow  | number | Minimum total size in bytes to be highlighted in yellow | 200000  |
-| totalHigh | number | Minimum total size in bytes to be highlighted in red    | 300000  |
+Read the [documentation](https://yousifalraheem.github.io/rollup-plugin-summary/) to learn about options and more.
 
 <hr/>
 
 ## License
 
 MIT
-
-## Documentation
-
-Read the [documentation](https://yousifalraheem.github.io/rollup-plugin-summary/)
