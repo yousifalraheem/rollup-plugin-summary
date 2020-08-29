@@ -32,7 +32,7 @@ function prepareDocs() {
     readme = readme.substring(0, docsTitle);
 
     let newDocs = readme + "\n" + docsIndex + "\n" + lisenseNote;
-    newDocs = newDocs.replace("![](docs/assets/sample_output.png)", "![](assets/sample_output.png)");
+    newDocs = newDocs.replace("docs/assets/sample_output.png", "assets/sample_output.png");
     fs.writeFileSync(path.resolve(dist, "index.md"), newDocs);
 
     console.info("✅ Created index.md");

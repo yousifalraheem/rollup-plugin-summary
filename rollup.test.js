@@ -14,10 +14,10 @@ export default {
         resolve(),
         commonjs(),
         summary({
-            warnLow: 60,
-            warnHigh: 70,
-            totalLow: 170,
-            totalHigh: 180
+            warnLow: 200,
+            warnHigh: 800,
+            totalLow: 1e3,
+            totalHigh: 2e3
         }),
     ]
 }
