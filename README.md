@@ -9,7 +9,7 @@
 # rollup-plugin-summary
 A rollup plugin that summarizes the output of the build. Under the hood, it uses [rollup-plugin-filesize](https://www.npmjs.com/package/rollup-plugin-filesize) to calculate file sizes and display them in a tabular form using [as-table](https://www.npmjs.com/package/as-table) and color it with [chalk](https://www.npmjs.com/package/chalk).
 
-![](screenshot.png)
+![](docs/assets/sample_output.png)
 
 ## Installation
 

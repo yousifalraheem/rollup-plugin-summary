@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const copyFolder = require('./util');
 
 const lisenseNote = `
 <hr/>
@@ -31,6 +32,7 @@ function prepareDocs() {
     readme = readme.substring(0, docsTitle);
 
     let newDocs = readme + "\n" + docsIndex + "\n" + lisenseNote;
+    newDocs = newDocs.replace("![](docs/assets/sample_output.png)", "![](assets/sample_output.png)");
     fs.writeFileSync(path.resolve(dist, "index.md"), newDocs);
 
     console.info("✅ Created index.md");
@@ -39,10 +41,13 @@ function prepareDocs() {
 function copyFiles() {
     fs.copyFileSync(path.resolve(docs, "_config.yml"), path.resolve(dist, "_config.yml"));
     console.info("✅ Copied Jekyll config file to dist");
+
+    copyFolder(path.resolve(docs, "assets"), path.resolve(dist));
+    console.info("✅ Copied assets folder to dist");
 }
 
+console.info("\n⏳ Generating docs...");
 cleanDist();
 prepareDocs();
 copyFiles();
-
-console.info("🎉 Done. Docs generated successully!");
+console.info("🎉 Done. Docs generated successully!\n");

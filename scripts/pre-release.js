@@ -21,7 +21,7 @@ function copyFiles() {
     console.info("✅ Copied over LICENSE to dist");
 }
 
+console.info("\n⏳ Preparing for release")
 writePackage();
 copyFiles();
-
-console.info("🎉 Done. Package is ready to be published.");
+console.info("🎉 Done. Package is ready to be published.\n");
