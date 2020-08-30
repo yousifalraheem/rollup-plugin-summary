@@ -3,7 +3,7 @@ import resolve from "rollup-plugin-node-resolve";
 import summary from "./index.js";
 
 export default {
-    input: "src/index.js",
+    input: "test-project/index.js",
     output: {
         dir: "temp",
         format: "esm",

@@ -14,7 +14,7 @@ module.exports = {
     moduleFileExtensions: ["js"],
     testEnvironment: "node",
     testMatch: [
-        "**/index.test.js"
+        "**/tests/*.test.js"
     ],
     transform: {
         "^.+\\.js$": "babel-jest"

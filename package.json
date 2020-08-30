@@ -29,8 +29,10 @@
         "prebuild": "rimraf dist/*",
         "build": "rollup -c",
         "postbuild": "node scripts/pre-release.js",
-        "test": "jest",
-        "posttest": "rimraf temp",
+        "pretest": "rimraf dist/*",
+        "test": "jest --coverage",
+        "test:project": "rollup -c rollup.test.js",
+        "posttest:project": "rimraf temp",
         "release": "semantic-release",
         "commit": "git-cz"
     },

@@ -7,7 +7,6 @@ function colorize(value, color) {
         case "green": return green(value);
         case "yellow": return yellowBright(value);
         case "red": return red(value);
-        default: return value;
     }
 }
 
@@ -71,7 +70,7 @@ export default function (options) {
         generateBundle: function (...args) {
             filesize({
                 reporter: (options, bundle, { fileName, bundleSize, minSize, gzipSize }) => {
-                    // Calculating ttals
+                    // Calculating totals
                     totalSize += calculateByteSize(bundleSize);
                     totalMinified += calculateByteSize(minSize);
                     totalGzipped += calculateByteSize(gzipSize);
