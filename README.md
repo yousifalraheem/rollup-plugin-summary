@@ -5,11 +5,12 @@
 ![https://img.shields.io/github/languages/top/yousifalraheem/rollup-plugin-summary](https://img.shields.io/github/languages/top/yousifalraheem/rollup-plugin-summary)
 ![https://img.shields.io/npm/l/rollup-plugin-summary](https://img.shields.io/npm/l/rollup-plugin-summary)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/rollup-plugin-summary)
+[![codecov](https://codecov.io/gh/yousifalraheem/rollup-plugin-summary/branch/master/graph/badge.svg)](https://codecov.io/gh/yousifalraheem/rollup-plugin-summary)
 
 # rollup-plugin-summary
 A rollup plugin that summarizes the output of the build. Under the hood, it uses [rollup-plugin-filesize](https://www.npmjs.com/package/rollup-plugin-filesize) to calculate file sizes and display them in a tabular form using [as-table](https://www.npmjs.com/package/as-table) and color it with [chalk](https://www.npmjs.com/package/chalk).
 
-<img src="docs/assets/sample_output.png" alt="Sample output" style="max-width: 500px" />
+<img src="docs/assets/sample_output.png" alt="Sample output" />
 
 ## Installation
 
