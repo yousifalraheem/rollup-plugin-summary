@@ -29,7 +29,7 @@
         "prebuild": "rimraf dist/*",
         "build": "rollup -c",
         "postbuild": "node scripts/pre-release.js",
-        "pretest": "rimraf dist/*",
+        "pretest": "rimraf coverage/*",
         "test": "jest --coverage",
         "test:project": "rollup -c rollup.test.js",
         "posttest:project": "rimraf temp",
