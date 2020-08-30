@@ -74,12 +74,5 @@ describe("Testing rollup plugin", () => {
         expect(summary[6].includes("5 B")).toBeTruthy();
         expect(summary[6].includes("7 KB")).toBeTruthy();
         expect(summary[6].includes("603 MB")).toBeTruthy();
-        // Colors
-        // Green for 1 MB
-        expect(summary[4].includes("32m4 B")).toBeTruthy();;
-        // Yellow for 5 KB
-        expect(summary[4].includes("93m5 KB")).toBeTruthy();;
-        // Red for 600 MB
-        expect(summary[4].includes("31m600 MB")).toBeTruthy();;
     });
 });

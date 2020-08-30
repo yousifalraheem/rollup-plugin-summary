@@ -54,13 +54,6 @@ describe("Testing rollup plugin - with extra options", () => {
         plugin().generateBundle();
 
         const summary = consoleSpy.mock.calls[0][0].split("\n").filter(item => !!item.trim());
-        // Colors
-        // Green for 50 B
-        expect(summary[3].includes("32m50 B")).toBeTruthy();;
-        // Yellow for 100 B
-        expect(summary[3].includes("93m100 B")).toBeTruthy();;
-        // Red for 200 B
-        expect(summary[3].includes("31m200 MB")).toBeTruthy();;
 
         // Pre-total dashes
         const longest = "a_very_very_very_very_long_name".length;
