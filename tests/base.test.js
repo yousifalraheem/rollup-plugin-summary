@@ -53,7 +53,7 @@ describe("Testing rollup plugin", () => {
 
         const summary = consoleSpy.mock.calls[0][0].split("\n").filter(item => !!item.trim());
 
-        expect(summary.length).toBe(7);
+        expect(summary).toHaveLength(7);
         // First statement
         expect(summary[0].includes("Generated files:")).toBeTruthy();
         // Table headers
@@ -98,12 +98,15 @@ describe("Testing rollup plugin", () => {
 
         expect(consoleSpy).toBeCalled();
 
-        const summary = consoleSpy.mock.calls[0][0]
+        let summary = consoleSpy.mock.calls[0][0]
             .split("\n")
-            .filter(item => !!item.trim())
-            .filter(item => item.includes("testfile3"))[0];
+            .filter(item => !!item.trim());
 
-        expect(summary.includes("0 B")).toBeTruthy();
-        expect(summary.includes("NaN")).toBeFalsy();
+        expect(summary).toHaveLength(6);
+
+        expect(summary[3].includes("0 B")).toBeTruthy();
+        expect(summary[3].includes("NaN")).toBeFalsy();
+        expect(summary[5].includes("0 B")).toBeTruthy();
+        expect(summary[5].includes("NaN")).toBeFalsy();
     });
 });
