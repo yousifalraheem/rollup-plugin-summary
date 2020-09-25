@@ -21,7 +21,7 @@ describe("Testing rollup plugin - with extra options", () => {
         }
     }
 
-    it("Should accept custom warning sizes", () => {
+    it("Should accept custom warning sizes", async () => {
         let consoleSpy = jest.spyOn(console, "info").mockImplementation();
 
         setup([
@@ -29,29 +29,32 @@ describe("Testing rollup plugin - with extra options", () => {
                 fileName: "NewTestFile",
                 bundleSize: "50 B",
                 minSize: "100 B",
-                gzipSize: "200 MB"
+                gzipSize: "200 MB",
+                brotliSize: "300 MB",
             },
             {
                 fileName: "a_very_very_very_very_long_name",
                 bundleSize: "50 B",
                 minSize: "100 B",
-                gzipSize: "200 MB"
+                gzipSize: "200 MB",
+                brotliSize: "300 MB",
             },
             {
                 fileName: "lorem_ipsum_name",
                 bundleSize: "50 GB",
                 minSize: "100 TB",
-                gzipSize: "200 MB"
+                gzipSize: "200 MB",
+                brotliSize: "300 MB",
             }
         ]);
 
-        plugin({
+        await plugin({
             warnLow: 100,
             warnHigh: 200,
             totalLow: 300,
             totalHigh: 400
         }).generateBundle();
-        plugin().generateBundle();
+        await plugin().generateBundle();
 
         const summary = consoleSpy.mock.calls[0][0].split("\n").filter(item => !!item.trim());
 

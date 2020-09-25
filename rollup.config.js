@@ -24,7 +24,7 @@ export default {
         commonjs(),
         json(),
         externals(),
-        filesize(),
+        filesize({ showBrotliSize: true }),
         terser(),
     ]
 }

@@ -52,10 +52,12 @@ let columnsMaxValue = {
     Size: '',
     Minified: '',
     Gzipped: '',
+    Brotli: '',
 }
 let totalSize = 0;
 let totalMinified = 0;
 let totalGzipped = 0;
+let totalBrotli = 0;
 
 export default function (options) {
     const defaultOptions = {
@@ -67,20 +69,23 @@ export default function (options) {
 
     return {
         name: "rollup-plugin-summary",
-        generateBundle: function (...args) {
-            filesize({
-                reporter: (options, bundle, { fileName, bundleSize, minSize, gzipSize }) => {
+        generateBundle: async function (...args) {
+            await filesize({
+                showBrotliSize: true,
+                reporter: (options, bundle, { fileName, bundleSize, minSize, gzipSize, brotliSize }) => {
                     // Calculating totals
-                    totalSize += calculateByteSize(bundleSize);
-                    totalMinified += calculateByteSize(minSize);
-                    totalGzipped += calculateByteSize(gzipSize);
+                    totalSize += calculateByteSize(bundleSize || "0 B");
+                    totalMinified += calculateByteSize(minSize || "0 B");
+                    totalGzipped += calculateByteSize(gzipSize || "0 B");
+                    totalBrotli += calculateByteSize(brotliSize || "0 B");
 
                     // Archiving entries
                     sizes.push({
                         Name: fileName,
-                        Size: getReadableSize({ value: calculateByteSize(bundleSize), ...defaultOptions }),
-                        Minified: getReadableSize({ value: calculateByteSize(minSize), ...defaultOptions }),
-                        Gzipped: getReadableSize({ value: calculateByteSize(gzipSize), ...defaultOptions }),
+                        Size: getReadableSize({ value: calculateByteSize(bundleSize || "0 B"), ...defaultOptions }),
+                        Minified: getReadableSize({ value: calculateByteSize(minSize || "0 B"), ...defaultOptions }),
+                        Gzipped: getReadableSize({ value: calculateByteSize(gzipSize || "0 B"), ...defaultOptions }),
+                        Brotli: getReadableSize({ value: calculateByteSize(brotliSize || "0 B"), ...defaultOptions }),
                     });
 
                     const max = (a, b) => a.length > b.length ? a : b;
@@ -94,6 +99,7 @@ export default function (options) {
                 Size: getReadableSize({ value: totalSize, isTotal: true, ...defaultOptions, colored: false }),
                 Minified: getReadableSize({ value: totalMinified, isTotal: true, ...defaultOptions, colored: false }),
                 Gzipped: getReadableSize({ value: totalGzipped, isTotal: true, ...defaultOptions, colored: false }),
+                Brotli: getReadableSize({ value: totalBrotli, isTotal: true, ...defaultOptions, colored: false }),
             }
 
             const makeDashes = (times) => "-".repeat(times);
@@ -104,19 +110,21 @@ export default function (options) {
                     Name: makeDashes(columnsMaxValue.Name.length),
                     Size: makeDashes(columnsMaxValue.Size.length),
                     Minified: makeDashes(columnsMaxValue.Minified.length),
-                    Gzipped: makeDashes(columnsMaxValue.Gzipped.length + 2), // 2 is to get the dashes to reach the right end of the table
+                    Gzipped: makeDashes(columnsMaxValue.Gzipped.length), // 2 is to get the dashes to reach the right end of the table
+                    Brotli: makeDashes(columnsMaxValue.Brotli.length + 2), // 2 is to get the dashes to reach the right end of the table
                 },
                 {
                     Name: "Total",
                     Size: getReadableSize({ value: totalSize, isTotal: true, ...defaultOptions }),
                     Minified: getReadableSize({ value: totalMinified, isTotal: true, ...defaultOptions }),
                     Gzipped: getReadableSize({ value: totalGzipped, isTotal: true, ...defaultOptions }),
+                    Brotli: getReadableSize({ value: totalBrotli, isTotal: true, ...defaultOptions }),
                 }
             );
             // Printing
             console.info(`
                 \n${bold("📄 Generated files:")}
-                \n${asTable(sizes.map(item => ({ Name: item.Name, Size: item.Size, Minified: item.Minified, Gzipped: item.Gzipped })))}
+                \n${asTable(sizes.map(item => ({ Name: item.Name, Size: item.Size, Minified: item.Minified, Gzipped: item.Gzipped, Brotli: item.Brotli })))}
             `);
         }
     }
