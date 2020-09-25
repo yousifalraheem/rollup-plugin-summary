@@ -63,6 +63,6 @@ describe("Testing rollup plugin - with extra options", () => {
         expect(summary[6].split(" ")[0]).toHaveLength(longest);
 
         // Above GB is not supported
-        expect(summary[5].includes("50000000000")).toBeTruthy();
+        expect(summary[summary.length - 1].includes("50000000100")).toBeTruthy();
     });
 });

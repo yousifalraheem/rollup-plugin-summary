@@ -47,7 +47,7 @@ export default function (options) {
         }
     }
 
-    const sizes = [];
+    let sizes = [];
     let columnsMaxValue = {
         Name: '',
         Size: '',
@@ -70,6 +70,10 @@ export default function (options) {
     return {
         name: "rollup-plugin-summary",
         generateBundle: async function (...args) {
+            // Reset ahead of calculations
+            totalSize = totalMinified = totalGzipped = totalBrotli = 0;
+            sizes = [];
+
             await filesize({
                 showBrotliSize: true,
                 reporter: (options, bundle, { fileName, bundleSize, minSize, gzipSize, brotliSize }) => {
@@ -103,6 +107,8 @@ export default function (options) {
             }
 
             const makeDashes = (times) => "-".repeat(times);
+
+            sizes = sizes.sort((a, b) => a.Name.localeCompare(b.Name));
 
             // Adding totals (footer)
             sizes.push(
