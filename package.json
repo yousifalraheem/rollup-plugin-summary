@@ -48,11 +48,11 @@
         "cz-conventional-changelog": "^3.3.0",
         "husky": "^4.2.5",
         "jest": "^26.4.2",
-        "rollup": "^2.26.5",
+        "rollup": "^2.28.2",
         "rollup-plugin-node-externals": "^2.2.0",
         "rollup-plugin-node-resolve": "^5.2.0",
-        "rollup-plugin-terser": "^7.0.0",
-        "semantic-release": "^17.1.1"
+        "rollup-plugin-terser": "^7.0.2",
+        "semantic-release": "^17.1.2"
     },
     "dependencies": {
         "as-table": "^1.0.55",
