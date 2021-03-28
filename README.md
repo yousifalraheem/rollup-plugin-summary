@@ -19,13 +19,13 @@ A rollup plugin that summarizes the output of the build. Under the hood, it uses
 ### npm
 
 ```terminal
-npm i rollup-plugin-summary -D
+npm i -D rollup-plugin-summary
 ```
 
 ### yarn
 
 ```terminal
-yarn add rollup-plugin-summary -D
+yarn add -D rollup-plugin-summary
 ```
 
 <hr/>
@@ -43,17 +43,17 @@ export default {
     ]
 }
 ```
-
-<!-- REMOVE -->
+<!-- github-only-start -->
 
 <hr/>
 
 ## Documentation
 
-Read the [documentation](https://yousifalraheem.github.io/rollup-plugin-summary/) to learn about options and more.
+Read the full [documentation](https://yousifalraheem.github.io/rollup-plugin-summary/) to learn about options and more.
 
 <hr/>
 
 ## License
 
 MIT
+<!-- github-only-end -->

@@ -1,27 +1,35 @@
-const fs = require("fs");
-const path = require("path");
+const { copyFileSync, writeFileSync } = require("fs");
+const { resolve } = require("path");
 const pkg = require("../package.json");
 
-const dist = path.resolve(__dirname, "../dist");
-const root = path.resolve(__dirname, "../");
+const dist = resolve(__dirname, "../dist");
+const root = resolve(__dirname, "../");
+
 const unwantedPkgKeys = ["devDependencies", "scripts", "config", "commitlint", "husky", "release"];
 
-function writePackage() {
-    unwantedPkgKeys.map(key => { delete pkg[key] });
-    fs.writeFileSync(path.resolve(dist, "package.json"), JSON.stringify(pkg, null, 4));
-    console.info("✅ Created package.json in dist folder");
+const PreRelease = {
+    writePackage: function () {
+        unwantedPkgKeys.map(key => { delete pkg[key] });
+        writeFileSync(resolve(dist, "package.json"), JSON.stringify(pkg, null, 4));
+        console.info("✅ Created package.json in dist folder");
+        return this;
+    },
+    copyFiles: function () {
+        copyFileSync(resolve(root, "index.d.ts"), resolve(dist, "index.d.ts"));
+        console.info("✅ Copied over index.d.ts to dist");
+
+        copyFileSync(resolve(root, "README.md"), resolve(dist, "README.md"));
+        console.info("✅ Copied over README.md to dist");
+
+        copyFileSync(resolve(root, "LICENSE"), resolve(dist, "LICENSE"));
+        console.info("✅ Copied over LICENSE to dist");
+        return this;
+    },
+    prepare: function () {
+        console.info("\n⏳ Preparing for release");
+        this.writePackage().copyFiles();
+        console.info("🎉 Done. Package is ready to be published.\n");
+    }
 }
 
-function copyFiles() {
-    fs.copyFileSync(path.resolve(root, "index.d.ts"), path.resolve(dist, "index.d.ts"));
-    fs.copyFileSync(path.resolve(root, "README.md"), path.resolve(dist, "README.md"));
-    fs.copyFileSync(path.resolve(root, "LICENSE"), path.resolve(dist, "LICENSE"));
-    console.info("✅ Copied over index.d.ts to dist");
-    console.info("✅ Copied over README.md to dist");
-    console.info("✅ Copied over LICENSE to dist");
-}
-
-console.info("\n⏳ Preparing for release")
-writePackage();
-copyFiles();
-console.info("🎉 Done. Package is ready to be published.\n");
+PreRelease.prepare();
