@@ -2,7 +2,19 @@ import filesize from "rollup-plugin-filesize";
 import asTable from "as-table";
 import { green, yellowBright, red, bold } from "chalk";
 
-export default function (options) {
+/**
+ * Show summary of compiled files
+ * @param {{
+ *   warnLow?: number;
+ *   warnHigh?: number;
+ *   totalLow?: number;
+ *   totalHigh?: number;
+ *   showBrotliSize?: boolean;
+ *   showMinifiedSize?: boolean;
+ *   showGzippedSize?: boolean;
+ * }} options Plugin options
+ */
+export default function (options = {}) {
     function colorize(value, color) {
         switch (color) {
             case "green": return green(value);
@@ -61,10 +73,13 @@ export default function (options) {
     let totalBrotli = 0;
 
     const defaultOptions = {
-        warnLow: options && options.warnLow || 5e3,
-        warnHigh: options && options.warnHigh || 1e4,
-        totalLow: options && options.totalLow || 2e5,
-        totalHigh: options && options.totalHigh || 3e5
+        warnLow: options.warnLow ?? 5e3,
+        warnHigh: options.warnHigh ?? 1e4,
+        totalLow: options.totalLow ?? 2e5,
+        totalHigh: options.totalHigh ?? 3e5,
+        showBrotliSize: options.showBrotliSize ?? true,
+        showGzippedSize: options.showGzippedSize ?? true,
+        showMinifiedSize: options.showMinifiedSize ?? true,
     };
 
     return {
@@ -75,25 +90,35 @@ export default function (options) {
             sizes = [];
 
             await filesize({
-                showBrotliSize: true,
+                showBrotliSize: defaultOptions.showBrotliSize,
+                showGzippedSize: defaultOptions.showGzippedSize,
+                showMinifiedSize: defaultOptions.showMinifiedSize,
                 reporter: (options, bundle, { fileName, bundleSize, minSize, gzipSize, brotliSize }) => {
                     // Calculating totals
                     totalSize += calculateByteSize(bundleSize || "0 B");
-                    totalMinified += calculateByteSize(minSize || "0 B");
-                    totalGzipped += calculateByteSize(gzipSize || "0 B");
-                    totalBrotli += calculateByteSize(brotliSize || "0 B");
 
-                    // Archiving entries
-                    sizes.push({
+                    const entry = {
                         Name: fileName,
                         Size: getReadableSize({ value: calculateByteSize(bundleSize || "0 B"), ...defaultOptions }),
-                        Minified: getReadableSize({ value: calculateByteSize(minSize || "0 B"), ...defaultOptions }),
-                        Gzipped: getReadableSize({ value: calculateByteSize(gzipSize || "0 B"), ...defaultOptions }),
-                        Brotli: getReadableSize({ value: calculateByteSize(brotliSize || "0 B"), ...defaultOptions }),
-                    });
+                    }
+
+                    if (defaultOptions.showMinifiedSize) {
+                        totalMinified += calculateByteSize(minSize || "0 B");
+                        entry.Minified = getReadableSize({ value: calculateByteSize(minSize || "0 B"), ...defaultOptions });
+                    }
+                    if (defaultOptions.showGzippedSize) {
+                        totalGzipped += calculateByteSize(gzipSize || "0 B");
+                        entry.Gzipped = getReadableSize({ value: calculateByteSize(gzipSize || "0 B"), ...defaultOptions });
+                    }
+                    if (defaultOptions.showBrotliSize) {
+                        totalBrotli += calculateByteSize(brotliSize || "0 B");
+                        entry.Brotli = getReadableSize({ value: calculateByteSize(brotliSize || "0 B"), ...defaultOptions });
+                    }
+
+                    // Archiving entries
+                    sizes.push(entry);
 
                     const max = (a, b) => a.length > b.length ? a : b;
-
                     columnsMaxValue.Name = max(columnsMaxValue.Name, fileName);
                 }
             }).generateBundle(...args);
@@ -101,37 +126,64 @@ export default function (options) {
             columnsMaxValue = {
                 Name: columnsMaxValue.Name,
                 Size: getReadableSize({ value: totalSize, isTotal: true, ...defaultOptions, colored: false }),
-                Minified: getReadableSize({ value: totalMinified, isTotal: true, ...defaultOptions, colored: false }),
-                Gzipped: getReadableSize({ value: totalGzipped, isTotal: true, ...defaultOptions, colored: false }),
-                Brotli: getReadableSize({ value: totalBrotli, isTotal: true, ...defaultOptions, colored: false }),
+            }
+            if (defaultOptions.showMinifiedSize) {
+                columnsMaxValue.Minified = getReadableSize({ value: totalMinified, isTotal: true, ...defaultOptions, colored: false });
+            }
+            if (defaultOptions.showGzippedSize) {
+                columnsMaxValue.Gzipped = getReadableSize({ value: totalGzipped, isTotal: true, ...defaultOptions, colored: false });
+            }
+            if (defaultOptions.showBrotliSize) {
+                columnsMaxValue.Brotli = getReadableSize({ value: totalBrotli, isTotal: true, ...defaultOptions, colored: false });
             }
 
             const makeDashes = (times) => "-".repeat(times);
 
             sizes = sizes.sort((a, b) => a.Name.localeCompare(b.Name));
 
+            const dashes = {
+                Name: makeDashes(columnsMaxValue.Name.length),
+                Size: makeDashes(columnsMaxValue.Size.length),
+            }
+            const totals = {
+                Name: "Total",
+                Size: getReadableSize({ value: totalSize, isTotal: true, ...defaultOptions }),
+            }
+
+            if (defaultOptions.showMinifiedSize) {
+                dashes.Minified = makeDashes(columnsMaxValue.Minified.length);
+                totals.Minified = getReadableSize({ value: totalMinified, isTotal: true, ...defaultOptions });
+            }
+            if (defaultOptions.showGzippedSize) {
+                // 2 is to get the dashes to reach the right end of the table
+                dashes.Gzipped = makeDashes(columnsMaxValue.Gzipped.length);
+                totals.Gzipped = getReadableSize({ value: totalGzipped, isTotal: true, ...defaultOptions });
+            }
+            if (defaultOptions.showBrotliSize) {
+                // 2 is to get the dashes to reach the right end of the table
+                dashes.Brotli = makeDashes(columnsMaxValue.Brotli.length + 2);
+                totals.Brotli = getReadableSize({ value: totalBrotli, isTotal: true, ...defaultOptions });
+            }
+
             // Adding totals (footer)
-            sizes.push(
-                {
-                    Name: makeDashes(columnsMaxValue.Name.length),
-                    Size: makeDashes(columnsMaxValue.Size.length),
-                    Minified: makeDashes(columnsMaxValue.Minified.length),
-                    Gzipped: makeDashes(columnsMaxValue.Gzipped.length), // 2 is to get the dashes to reach the right end of the table
-                    Brotli: makeDashes(columnsMaxValue.Brotli.length + 2), // 2 is to get the dashes to reach the right end of the table
-                },
-                {
-                    Name: "Total",
-                    Size: getReadableSize({ value: totalSize, isTotal: true, ...defaultOptions }),
-                    Minified: getReadableSize({ value: totalMinified, isTotal: true, ...defaultOptions }),
-                    Gzipped: getReadableSize({ value: totalGzipped, isTotal: true, ...defaultOptions }),
-                    Brotli: getReadableSize({ value: totalBrotli, isTotal: true, ...defaultOptions }),
-                }
-            );
+            sizes.push(dashes, totals);
             // Printing
-            console.info(`
-                \n${bold("📄 Generated files:")}
-                \n${asTable(sizes.map(item => ({ Name: item.Name, Size: item.Size, Minified: item.Minified, Gzipped: item.Gzipped, Brotli: item.Brotli })))}
-            `);
+            console.info(`\n${bold("📄 Generated files:\n")}\n${asTable(sizes.map(item => {
+                const output = {
+                    Name: item.Name,
+                    Size: item.Size,
+                }
+                if (defaultOptions.showMinifiedSize) {
+                    output.Minified = item.Minified;
+                }
+                if (defaultOptions.showGzippedSize) {
+                    output.Gzipped = item.Gzipped;
+                }
+                if (defaultOptions.showBrotliSize) {
+                    output.Brotli = item.Brotli;
+                }
+                return output;
+            }))}\n`);
         }
     }
 }

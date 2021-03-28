@@ -53,33 +53,33 @@ describe("Testing rollup plugin", () => {
 
         const summary = consoleSpy.mock.calls[0][0].split("\n").filter(item => !!item.trim());
 
-        expect(summary).toHaveLength(7);
+        expect(summary).toHaveLength(8);
         // First statement
         expect(summary[0].includes("Generated files:")).toBeTruthy();
         // Table headers
-        expect(summary[1].includes("Name")).toBeTruthy();
-        expect(summary[1].includes("Size")).toBeTruthy();
-        expect(summary[1].includes("Minified")).toBeTruthy();
-        expect(summary[1].includes("Gzipped")).toBeTruthy();
-        expect(summary[1].includes("Brotli")).toBeTruthy();
+        expect(summary[2].includes("Name")).toBeTruthy();
+        expect(summary[2].includes("Size")).toBeTruthy();
+        expect(summary[2].includes("Minified")).toBeTruthy();
+        expect(summary[2].includes("Gzipped")).toBeTruthy();
+        expect(summary[2].includes("Brotli")).toBeTruthy();
         // File 1 summary
-        expect(summary[3].includes("testfile1")).toBeTruthy();
-        expect(summary[3].includes("1 B")).toBeTruthy();
-        expect(summary[3].includes("2 KB")).toBeTruthy();
-        expect(summary[3].includes("3 MB")).toBeTruthy();
-        expect(summary[3].includes("4 MB")).toBeTruthy();
+        expect(summary[4].includes("testfile1")).toBeTruthy();
+        expect(summary[4].includes("1 B")).toBeTruthy();
+        expect(summary[4].includes("2 KB")).toBeTruthy();
+        expect(summary[4].includes("3 MB")).toBeTruthy();
+        expect(summary[4].includes("4 MB")).toBeTruthy();
         // File 2 summary
-        expect(summary[4].includes("testfile2")).toBeTruthy();
-        expect(summary[4].includes("4 B")).toBeTruthy();
-        expect(summary[4].includes("5 KB")).toBeTruthy();
-        expect(summary[4].includes("600 MB")).toBeTruthy();
-        expect(summary[4].includes("650 MB")).toBeTruthy();
+        expect(summary[5].includes("testfile2")).toBeTruthy();
+        expect(summary[5].includes("4 B")).toBeTruthy();
+        expect(summary[5].includes("5 KB")).toBeTruthy();
+        expect(summary[5].includes("600 MB")).toBeTruthy();
+        expect(summary[5].includes("650 MB")).toBeTruthy();
         // Total summary
-        expect(summary[6].includes("Total")).toBeTruthy();
-        expect(summary[6].includes("5 B")).toBeTruthy();
-        expect(summary[6].includes("7 KB")).toBeTruthy();
-        expect(summary[6].includes("603 MB")).toBeTruthy();
-        expect(summary[6].includes("654 MB")).toBeTruthy();
+        expect(summary[7].includes("Total")).toBeTruthy();
+        expect(summary[7].includes("5 B")).toBeTruthy();
+        expect(summary[7].includes("7 KB")).toBeTruthy();
+        expect(summary[7].includes("603 MB")).toBeTruthy();
+        expect(summary[7].includes("654 MB")).toBeTruthy();
     });
 
     it("Should display 0 B if no size is passed from filesize plugin", async () => {
@@ -102,11 +102,11 @@ describe("Testing rollup plugin", () => {
             .split("\n")
             .filter(item => !!item.trim());
 
-        expect(summary).toHaveLength(6);
+        expect(summary).toHaveLength(7);
 
-        expect(summary[3].includes("0 B")).toBeTruthy();
-        expect(summary[3].includes("NaN")).toBeFalsy();
-        expect(summary[5].includes("0 B")).toBeTruthy();
-        expect(summary[5].includes("NaN")).toBeFalsy();
+        expect(summary[6].includes("0 B")).toBeTruthy();
+        expect(summary[6].includes("NaN")).toBeFalsy();
+        expect(summary[6].includes("0 B")).toBeTruthy();
+        expect(summary[6].includes("NaN")).toBeFalsy();
     });
 });

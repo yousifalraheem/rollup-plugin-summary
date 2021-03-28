@@ -60,7 +60,7 @@ describe("Testing rollup plugin - with extra options", () => {
 
         // Pre-total dashes
         const longest = "a_very_very_very_very_long_name".length;
-        expect(summary[6].split(" ")[0]).toHaveLength(longest);
+        expect(summary[4].split(" ")[0]).toHaveLength(longest);
 
         // Above GB is not supported
         expect(summary[summary.length - 1].includes("50000000100")).toBeTruthy();
