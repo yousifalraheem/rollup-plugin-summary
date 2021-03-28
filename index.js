@@ -3,6 +3,16 @@ import asTable from "as-table";
 import { green, yellowBright, red, bold } from "chalk";
 
 /**
+ * Replacement for `??` which is only supported in node version 14 and above
+ * @param {any} val The value to be checked
+ * @param {any} def A default value to fallback to if the value is `null` or `undefined`
+ * @returns The value or the default value
+ */
+function defaultIfEmpty(val, def) {
+    return (val === null || val === undefined) ? def : val;
+}
+
+/**
  * Show summary of compiled files
  * @param {{
  *   warnLow?: number;
@@ -73,13 +83,13 @@ export default function (options = {}) {
     let totalBrotli = 0;
 
     const defaultOptions = {
-        warnLow: options.warnLow ?? 5e3,
-        warnHigh: options.warnHigh ?? 1e4,
-        totalLow: options.totalLow ?? 2e5,
-        totalHigh: options.totalHigh ?? 3e5,
-        showBrotliSize: options.showBrotliSize ?? true,
-        showGzippedSize: options.showGzippedSize ?? true,
-        showMinifiedSize: options.showMinifiedSize ?? true,
+        warnLow: defaultIfEmpty(options.warnLow, 5e3),
+        warnHigh: defaultIfEmpty(options.warnHigh, 1e4),
+        totalLow: defaultIfEmpty(options.totalLow, 2e5),
+        totalHigh: defaultIfEmpty(options.totalHigh, 3e5),
+        showBrotliSize: defaultIfEmpty(options.showBrotliSize, true),
+        showGzippedSize: defaultIfEmpty(options.showGzippedSize, true),
+        showMinifiedSize: defaultIfEmpty(options.showMinifiedSize, true),
     };
 
     return {
