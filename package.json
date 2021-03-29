@@ -44,6 +44,7 @@
         "@commitlint/config-conventional": "^12.0.1",
         "@rollup/plugin-commonjs": "^18.0.0",
         "@rollup/plugin-json": "^4.1.0",
+        "@types/jest": "^26.0.22",
         "babel-jest": "^26.3.0",
         "commitizen": "^4.2.1",
         "cz-conventional-changelog": "^3.3.0",

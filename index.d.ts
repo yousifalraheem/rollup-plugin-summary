@@ -1,4 +1,12 @@
-interface SummaryOptions {
+declare interface SummaryPrint {
+    Name: string;
+    Size: string;
+    Minified: string;
+    Gzipped: string;
+    Brotli: string;
+}
+
+declare interface SummaryOptions {
     /**
      * Minimum size in bytes to be highlighted in yellow.
      * @default 5000

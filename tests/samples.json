@@ -1,0 +1,23 @@
+[
+    {
+        "fileName": "NewTestFile",
+        "bundleSize": "50 B",
+        "minSize": "100 B",
+        "gzipSize": "200 MB",
+        "brotliSize": "300 MB"
+    },
+    {
+        "fileName": "a_very_very_very_very_long_name",
+        "bundleSize": "50 B",
+        "minSize": "100 B",
+        "gzipSize": "200 MB",
+        "brotliSize": "300 MB"
+    },
+    {
+        "fileName": "lorem_ipsum_name",
+        "bundleSize": "50 KB",
+        "minSize": "100 MB",
+        "gzipSize": "200 GB",
+        "brotliSize": "300 TB"
+    }
+]

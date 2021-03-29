@@ -25,6 +25,11 @@ function defaultIfEmpty(val, def) {
  * }} options Plugin options
  */
 export default function (options = {}) {
+    /**
+     * @param {string | number} value 
+     * @param {string} color 
+     * @returns {string}
+     */
     function colorize(value, color) {
         switch (color) {
             case "green": return green(value);
@@ -33,6 +38,10 @@ export default function (options = {}) {
         }
     }
 
+    /**
+     * @param {string} value 
+     * @returns {number}
+     */
     function calculateByteSize(value) {
         let [num, unit] = value.split(" ");
         switch (unit) {
@@ -44,11 +53,20 @@ export default function (options = {}) {
         }
     }
 
+    /**
+     * @param {number} num 
+     * @returns {string}
+     */
     function toReadableNumber(num) {
         return num.toLocaleString("en", { maximumFractionDigits: 2 });
     }
 
+    /**
+     * @param {import('./index').SummaryOptions & { value: string, isTotal: boolean, colored: boolean }} options 
+     * @returns {string}
+     */
     function getReadableSize({ value, isTotal, warnLow, warnHigh, totalLow, totalHigh, colored = true } = {}) {
+        /** @type {string} */
         let result;
         value = parseFloat(value);
         // File size unit
@@ -56,6 +74,7 @@ export default function (options = {}) {
             case value < 1e3: result = toReadableNumber(value) + " B"; break;
             case value >= 1e3 && value < 1e6: result = toReadableNumber(value / 1e3) + " KB"; break;
             case value >= 1e6 && value < 1e9: result = toReadableNumber(value / 1e6) + " MB"; break;
+            case value >= 1e9 && value < 1e12: result = toReadableNumber(value / 1e6) + " GB"; break;
             default: result = String(value.toFixed());
         }
 
@@ -69,6 +88,7 @@ export default function (options = {}) {
         }
     }
 
+    /** @type {import("./index").SummaryPrint[]} */
     let sizes = [];
     let columnsMaxValue = {
         Name: '',
@@ -82,6 +102,7 @@ export default function (options = {}) {
     let totalGzipped = 0;
     let totalBrotli = 0;
 
+    /** @type {import("./index").SummaryOptions} */
     const defaultOptions = {
         warnLow: defaultIfEmpty(options.warnLow, 5e3),
         warnHigh: defaultIfEmpty(options.warnHigh, 1e4),
@@ -105,29 +126,31 @@ export default function (options = {}) {
                 showMinifiedSize: defaultOptions.showMinifiedSize,
                 reporter: (options, bundle, { fileName, bundleSize, minSize, gzipSize, brotliSize }) => {
                     // Calculating totals
-                    totalSize += calculateByteSize(bundleSize || "0 B");
+                    totalSize += calculateByteSize(bundleSize);
 
+                    /** @type {import("./index").SummaryPrint} */
                     const entry = {
                         Name: fileName,
-                        Size: getReadableSize({ value: calculateByteSize(bundleSize || "0 B"), ...defaultOptions }),
+                        Size: getReadableSize({ value: calculateByteSize(bundleSize), ...defaultOptions }),
                     }
 
                     if (defaultOptions.showMinifiedSize) {
-                        totalMinified += calculateByteSize(minSize || "0 B");
-                        entry.Minified = getReadableSize({ value: calculateByteSize(minSize || "0 B"), ...defaultOptions });
+                        totalMinified += calculateByteSize(minSize);
+                        entry.Minified = getReadableSize({ value: calculateByteSize(minSize), ...defaultOptions });
                     }
                     if (defaultOptions.showGzippedSize) {
-                        totalGzipped += calculateByteSize(gzipSize || "0 B");
-                        entry.Gzipped = getReadableSize({ value: calculateByteSize(gzipSize || "0 B"), ...defaultOptions });
+                        totalGzipped += calculateByteSize(gzipSize);
+                        entry.Gzipped = getReadableSize({ value: calculateByteSize(gzipSize), ...defaultOptions });
                     }
                     if (defaultOptions.showBrotliSize) {
-                        totalBrotli += calculateByteSize(brotliSize || "0 B");
-                        entry.Brotli = getReadableSize({ value: calculateByteSize(brotliSize || "0 B"), ...defaultOptions });
+                        totalBrotli += calculateByteSize(brotliSize);
+                        entry.Brotli = getReadableSize({ value: calculateByteSize(brotliSize), ...defaultOptions });
                     }
 
                     // Archiving entries
                     sizes.push(entry);
 
+                    /** @type {(a: string, b: string) => string} */
                     const max = (a, b) => a.length > b.length ? a : b;
                     columnsMaxValue.Name = max(columnsMaxValue.Name, fileName);
                 }
@@ -147,14 +170,20 @@ export default function (options = {}) {
                 columnsMaxValue.Brotli = getReadableSize({ value: totalBrotli, isTotal: true, ...defaultOptions, colored: false });
             }
 
+            /**
+             * @param {number} times 
+             * @returns {string}
+             */
             const makeDashes = (times) => "-".repeat(times);
 
             sizes = sizes.sort((a, b) => a.Name.localeCompare(b.Name));
 
+            /** @type {import("./index").SummaryPrint} */
             const dashes = {
                 Name: makeDashes(columnsMaxValue.Name.length),
                 Size: makeDashes(columnsMaxValue.Size.length),
             }
+            /** @type {import("./index").SummaryPrint} */
             const totals = {
                 Name: "Total",
                 Size: getReadableSize({ value: totalSize, isTotal: true, ...defaultOptions }),
@@ -179,6 +208,7 @@ export default function (options = {}) {
             sizes.push(dashes, totals);
             // Printing
             console.info(`\n${bold("📄 Generated files:\n")}\n${asTable(sizes.map(item => {
+                /** @type {import("./index").SummaryPrint} */
                 const output = {
                     Name: item.Name,
                     Size: item.Size,
