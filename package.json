@@ -32,7 +32,7 @@
         "build:docs": "node scripts/pre-docs.js",
         "pretest": "rimraf coverage/*",
         "test": "jest --coverage",
-        "test:project": "rollup -c rollup.test.js",
+        "test:project": "rollup -c ./test-project/rollup.test.js",
         "posttest:project": "rimraf temp",
         "release": "semantic-release",
         "commit": "git-cz"

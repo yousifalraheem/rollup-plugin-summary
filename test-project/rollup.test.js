@@ -1,6 +1,6 @@
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "rollup-plugin-node-resolve";
-import summary from "./index.js";
+import summary from "../index.js";
 
 export default {
     input: "test-project/index.js",
