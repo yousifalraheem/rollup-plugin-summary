@@ -1,3 +1,5 @@
+import { Plugin } from 'rollup';
+
 declare interface SummaryPrint {
     Name: string;
     Size: string;
@@ -56,4 +58,4 @@ declare interface SummaryOptions {
  * Prints out a summary of the rollup build
  * @param {SummaryOptions} options Summary plugin options
  */
-export default function summary(options: SummaryOptions): void;
+export default function summary(options?: SummaryOptions): Plugin;
