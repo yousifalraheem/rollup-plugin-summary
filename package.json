@@ -63,6 +63,7 @@
         "rollup-plugin-filesize": "^9.0.2"
     },
     "peerDependencies": {
+        "rollup": "^2.0.0",
         "as-table": "^1.0.55",
         "chalk": "^4.1.0",
         "rollup-plugin-filesize": "^9.0.2"
