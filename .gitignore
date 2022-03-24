@@ -103,3 +103,10 @@ temp
 
 # TernJS port file
 .tern-port
+
+# file systemm
+.DS_Store
+
+# IDE
+.code
+.idea
