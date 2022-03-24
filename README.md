@@ -9,6 +9,7 @@
 [![Release](https://github.com/yousifalraheem/rollup-plugin-summary/actions/workflows/release.yml/badge.svg)](https://github.com/yousifalraheem/rollup-plugin-summary/actions/workflows/release.yml)
 
 # rollup-plugin-summary
+
 A rollup plugin that summarizes the output of the build. Under the hood, it uses [rollup-plugin-filesize](https://www.npmjs.com/package/rollup-plugin-filesize) to calculate file sizes and display them in a tabular form using [as-table](https://www.npmjs.com/package/as-table) and color it with [chalk](https://www.npmjs.com/package/chalk).
 
 <img src="docs/assets/sample_output.png" alt="Sample output" />
@@ -33,17 +34,16 @@ yarn add -D rollup-plugin-summary
 
 ## Usage
 
-File: *`rollup.config.js`*
+File: _`rollup.config.js`_
 
 ```javascript
-import summary from 'rollup-plugin-summary';
+import summary from "rollup-plugin-summary";
 
 export default {
-    plugins: [
-        summary(),
-    ]
-}
+  plugins: [summary()],
+};
 ```
+
 <!-- github-only-start -->
 
 <hr/>
@@ -57,4 +57,5 @@ Read the full [documentation](https://yousifalraheem.github.io/rollup-plugin-sum
 ## License
 
 MIT
+
 <!-- github-only-end -->

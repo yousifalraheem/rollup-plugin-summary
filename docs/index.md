@@ -20,13 +20,13 @@ Here is an example of how it's used:
 
 ```javascript
 {
-    plugins: [
-        summary({
-            warnLow: 1000,
-            warnHigh: 3000,
-            showMinifiedSize: false
-        })
-    ]
+  plugins: [
+    summary({
+      warnLow: 1000,
+      warnHigh: 3000,
+      showMinifiedSize: false,
+    }),
+  ];
 }
 ```
 
