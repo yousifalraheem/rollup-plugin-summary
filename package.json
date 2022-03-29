@@ -33,16 +33,13 @@
     "pretest": "rm -rf coverage/*",
     "test": "jest --coverage",
     "lint": "eslint .",
-    "test:project": "npm test --workspace=test-project",
+    "test:project": "npm test --prefix test-project",
     "release": "semantic-release",
     "commit": "cz",
     "prepare": "husky install",
     "format:check": "prettier --check .",
     "format:all": "prettier --write ."
   },
-  "workspaces": [
-    "test-project"
-  ],
   "devDependencies": {
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
@@ -96,7 +93,7 @@
     "pkgRoot": "dist"
   },
   "engines": {
-    "node": ">=14.0.0",
+    "node": ">=12.0.0",
     "npm": ">=8.3.0"
   }
 }
