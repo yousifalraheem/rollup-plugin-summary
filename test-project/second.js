@@ -1,3 +1,1 @@
-export function funcB() {
-    return "EFG";
-}
+export const funcB = () => "EFG";

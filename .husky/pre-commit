@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo eslint --fix . &&
+echo "✅ eslint finished successfully" &&
+prettier --write --ignore-unknown . &&
+echo "✅ Prettier finished successfully"

@@ -9,21 +9,29 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [14.x, 16.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build
-    - run: npm test
-    - run: npm run test:project
-    - run: npm run build:docs
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Installing dependencies
+        run: npm ci && npm ci --prefix test-project
+      - name: Checking formatting with Prettier
+        run: npm run format:check
+      - name: Checking code with ESLint
+        run: npm run lint
+      - name: Building the package
+        run: npm run build
+      - name: Running tests
+        run: npm test
+      - name: Testing the package in a temporary project
+        run: npm run test:project
+      - name: Building the documentation
+        run: npm run build:docs

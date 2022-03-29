@@ -1,3 +1,1 @@
-export function funcA() {
-    return "ABC";
-}
+export const funcA = () => "ABC";

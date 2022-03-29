@@ -1,85 +1,22 @@
-export function funcAA() {
-    return "ABC";
-}
-
-export function funcBB() {
-    return "ABC";
-}
-
-export function funcC() {
-    return "ABC";
-}
-
-export function funcD() {
-    return "ABC";
-}
-
-export function funcE() {
-    return "ABC";
-}
-
-export function funcF() {
-    return "ABC";
-}
-
-export function funcG() {
-    return "ABC";
-}
-
-export function funcH() {
-    return "ABC";
-}
-
-export function funcI() {
-    return "ABC";
-}
-
-export function funcJ() {
-    return "ABC";
-}
-
-export function funcK() {
-    return "ABC";
-}
-
-export function funcL() {
-    return "ABC";
-}
-export function funcM() {
-    return "ABC";
-}
-
-export function funcN() {
-    return "ABC";
-}
-
-export function funcO() {
-    return "ABC";
-}
-
-export function funcP() {
-    return "ABC";
-}
-
-export function funcQ() {
-    return "ABC";
-}
-
-export function funcR() {
-    return "ABC";
-}
-export function funcS() {
-    return "ABC";
-}
-
-export function funcT() {
-    return "ABC";
-}
-
-export function funcU() {
-    return "ABC";
-}
-
-export function funcV() {
-    return "ABC";
-}
+export const funcAA = () => "ABC";
+export const funcBB = () => "ABC";
+export const funcC = () => "ABC";
+export const funcD = () => "ABC";
+export const funcE = () => "ABC";
+export const funcF = () => "ABC";
+export const funcG = () => "ABC";
+export const funcH = () => "ABC";
+export const funcI = () => "ABC";
+export const funcJ = () => "ABC";
+export const funcK = () => "ABC";
+export const funcL = () => "ABC";
+export const funcM = () => "ABC";
+export const funcN = () => "ABC";
+export const funcO = () => "ABC";
+export const funcP = () => "ABC";
+export const funcQ = () => "ABC";
+export const funcR = () => "ABC";
+export const funcS = () => "ABC";
+export const funcT = () => "ABC";
+export const funcU = () => "ABC";
+export const funcV = () => "ABC";
