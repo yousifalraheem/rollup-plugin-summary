@@ -1,15 +1,23 @@
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
-import summary from "../index";
+const summary = require("../dist/index");
 
 export default {
   input: "index.js",
-  output: {
-    dir: "temp",
-    format: "esm",
-    esModule: true,
-    preserveModules: true,
-  },
+  output: [
+    {
+      dir: "temp/esm",
+      format: "esm",
+      esModule: true,
+      preserveModules: true,
+    },
+    {
+      dir: "temp/umd",
+      format: "cjs",
+      esModule: true,
+      preserveModules: true,
+    },
+  ],
   plugins: [
     resolve(),
     commonjs(),
@@ -18,6 +26,9 @@ export default {
       warnHigh: 800,
       totalLow: 1e3,
       totalHigh: 2e3,
+      showMinifiedSize: true,
+      showBrotliSize: true,
+      showGzippedSize: true,
     }),
   ],
 };

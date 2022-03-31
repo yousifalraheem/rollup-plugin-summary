@@ -2,7 +2,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
 import externals from "rollup-plugin-node-externals";
-import filesize from "rollup-plugin-filesize";
 import { terser } from "rollup-plugin-terser";
 
 export default {
@@ -18,13 +17,12 @@ export default {
     sourcemap: true,
     exports: "default",
   },
-  external: ["bluebird", "rollup-plugin-filesize", "as-table", "chalk"],
+  // external: ["bluebird", "as-table", "chalk"],
   plugins: [
     resolve({ preferBuiltins: true }),
     commonjs(),
     json(),
     externals(),
-    filesize({ showBrotliSize: true }),
     terser(),
   ],
 };

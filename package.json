@@ -31,7 +31,7 @@
     "postbuild": "node scripts/pre-release.js",
     "build:docs": "node scripts/pre-docs.js",
     "pretest": "rm -rf coverage/*",
-    "test": "jest --coverage",
+    "test": "jest",
     "lint": "eslint .",
     "test:project": "npm test --prefix test-project",
     "release": "semantic-release",
@@ -41,8 +41,9 @@
     "format:all": "prettier --write ."
   },
   "devDependencies": {
-    "@babel/core": "^7.11.4",
-    "@babel/preset-env": "^7.11.0",
+    "@babel/core": "^7.17.8",
+    "@babel/plugin-transform-modules-commonjs": "^7.17.7",
+    "@babel/preset-env": "^7.16.11",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
     "@rollup/plugin-commonjs": "^21.0.2",
@@ -50,6 +51,7 @@
     "@rollup/plugin-node-resolve": "^13.1.3",
     "@types/jest": "^27.4.1",
     "babel-jest": "^27.5.1",
+    "babel-preset-env": "^1.7.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.11.0",
@@ -68,13 +70,14 @@
   },
   "dependencies": {
     "as-table": "^1.0.55",
-    "chalk": "^5.0.1",
-    "rollup-plugin-filesize": "^9.0.2"
+    "brotli-size": "^4.0.0",
+    "cli-table3": "^0.6.1",
+    "filesize": "^8.0.7",
+    "gzip-size": "^7.0.0",
+    "terser": "^5.12.1"
   },
   "peerDependencies": {
-    "as-table": "^1.0.55",
-    "rollup": "^2.0.0",
-    "rollup-plugin-filesize": "^9.0.2"
+    "rollup": "^2.0.0"
   },
   "config": {
     "commitizen": {

@@ -1,4 +1,36 @@
-import { Plugin } from "rollup";
+type AssetInfo = {
+  fileName: string;
+  name?: string;
+  source: string | Uint8Array;
+  type: "asset";
+};
+
+type ChunkInfo = {
+  code: string;
+  dynamicImports: string[];
+  exports: string[];
+  facadeModuleId: string | null;
+  fileName: string;
+  implicitlyLoadedBefore: string[];
+  imports: string[];
+  importedBindings: { [imported: string]: string[] };
+  isDynamicEntry: boolean;
+  isEntry: boolean;
+  isImplicitEntry: boolean;
+  map: import("rollup").SourceMap | null;
+  modules: {
+    [id: string]: {
+      renderedExports: string[];
+      removedExports: string[];
+      renderedLength: number;
+      originalLength: number;
+      code: string | null;
+    };
+  };
+  name: string;
+  referencedFiles: string[];
+  type: "chunk";
+};
 
 declare interface SummaryPrint {
   Name: string;
@@ -54,8 +86,22 @@ declare interface SummaryOptions {
   showGzippedSize?: boolean;
 }
 
+declare interface ValueDescriptor {
+  value: number;
+  displayValue: string;
+  coloredValue: string;
+}
+
+declare interface SummaryChunkInfo {
+  fileName: string;
+  size: ValueDescriptor;
+  minified?: ValueDescriptor;
+  gzipped?: ValueDescriptor;
+  brotli?: ValueDescriptor;
+}
+
 /**
  * Prints out a summary of the rollup build
  * @param {SummaryOptions} options Summary plugin options
  */
-export default function summary(options?: SummaryOptions): Plugin;
+export default function summary(options?: SummaryOptions): import("rollup").Plugin;
