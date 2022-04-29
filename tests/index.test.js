@@ -3,7 +3,7 @@
 
 describe("Testing...", () => {
   expect(true).toBeTruthy();
-})
+});
 
 // /** @type {(str: string) => string} */
 // const colorize = str => str;
