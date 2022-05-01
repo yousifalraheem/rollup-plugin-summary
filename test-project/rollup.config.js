@@ -1,6 +1,4 @@
-import commonjs from "@rollup/plugin-commonjs";
-import resolve from "@rollup/plugin-node-resolve";
-const summary = require("../dist/index");
+const summary = require("../dist");
 
 export default {
   input: "index.js",
@@ -19,8 +17,6 @@ export default {
     },
   ],
   plugins: [
-    resolve(),
-    commonjs(),
     summary({
       warnLow: 200,
       warnHigh: 800,

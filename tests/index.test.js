@@ -1,22 +1,75 @@
-// import summary from "../";
-// const samples = require("./samples.json");
+import summary from "../";
+import bundles from "./bundles.json";
 
-describe("Testing...", () => {
-  expect(true).toBeTruthy();
-})
+// eslint-disable-next-line no-control-regex
+const ansiRegex = /[\u001b\u009b][[()#;?]*(?:\d{1,4}(?:;\d{0,4})*)?[\dA-ORZcf-nqry=><]/g;
 
-// /** @type {(str: string) => string} */
-// const colorize = str => str;
-//
-// jest.mock("chalk", () => ({
-//   green: jest.fn().mockImplementation(colorize),
-//   yellowBright: jest.fn().mockImplementation(colorize),
-//   red: jest.fn().mockImplementation(colorize),
-//   bold: jest.fn().mockImplementation(colorize),
-// }));
-//
-// import chalk from "chalk";
-//
+describe("Rollup plugin summary", () => {
+  /** @type {any} */
+  const options = { dir: "temp/esm" };
+  const log = jest.fn();
+  jest.spyOn(console, "log").mockImplementation(log);
+
+  beforeEach(log.mockClear);
+
+  it("Should return the correct plugin structure", () => {
+    const plugin = summary();
+    expect(plugin.name).toEqual("rollup-plugin-summary");
+    expect(typeof plugin.generateBundle).toEqual("function");
+    expect(typeof plugin.closeBundle).toEqual("function");
+  });
+
+  it("Should generate summary correctly using defaults", async () => {
+    const plugin = summary();
+    await plugin.generateBundle(options, bundles, true);
+    plugin.closeBundle();
+    expect(log).toHaveBeenCalledTimes(2);
+    expect(log).toHaveBeenNthCalledWith(1, "Build summary for", expect.stringContaining(options.dir));
+
+    /** @type {string[]} */
+    const outputTable = log.mock.calls[1][0].split("\n").map(i => i.replace(ansiRegex, ""));
+    // Column names
+    expect(outputTable[1]).toContain("File name");
+    expect(outputTable[1]).toContain("Size");
+    // Separator at least 9 to cover the column names
+    expect(outputTable[2]).toContain("-".repeat(9));
+    // File names
+    const fileNames = Object.keys(bundles);
+    expect(outputTable[3]).toContain(fileNames[0]);
+    expect(outputTable[4]).toContain(fileNames[1]);
+    // Separator at least 9 to cover the column names
+    expect(outputTable[5]).toContain("-".repeat(9));
+    // Totals column
+    expect(outputTable[6]).toContain("Totals");
+    // File sizes
+    expect(/\d+\s\w/.test(outputTable[3])).toBeTruthy();
+    expect(/\d+\s\w/.test(outputTable[4])).toBeTruthy();
+    expect(/\d+\s\w/.test(outputTable[6])).toBeTruthy();
+  });
+
+  it("Should do the proper compression when passed", async () => {
+    const plugin = summary({
+      showBrotliSize: true,
+      showGzippedSize: true,
+      showMinifiedSize: true,
+    });
+    await plugin.generateBundle(options, bundles, true);
+    plugin.closeBundle();
+    /** @type {string[]} */
+    const outputTable = log.mock.calls[1][0].split("\n").map(i => i.replace(ansiRegex, ""));
+    // Column names
+    expect(outputTable[1]).toContain("File name");
+    expect(outputTable[1]).toContain("Size");
+    expect(outputTable[1]).toContain("Minified");
+    expect(outputTable[1]).toContain("Gzipped");
+    expect(outputTable[1]).toContain("Brotli");
+    // File sizes. Should match 4 file sizes
+    expect(outputTable[3].match(/\d+\s\w/g)).toHaveLength(4);
+    expect(outputTable[4].match(/\d+\s\w/g)).toHaveLength(4);
+    expect(outputTable[6].match(/\d+\s\w/g)).toHaveLength(4);
+  });
+});
+
 // describe("Testing plugin", () => {
 //   const consoleSpy = jest.spyOn(console, "info");
 //

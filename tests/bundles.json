@@ -1,0 +1,10 @@
+{
+  "index.js": {
+    "type": "chunk",
+    "code": "import test from 'test';"
+  },
+  "second.js": {
+    "type": "chunk",
+    "code": "console.log('test')"
+  }
+}

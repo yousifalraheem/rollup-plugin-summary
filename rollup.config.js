@@ -18,11 +18,5 @@ export default {
     exports: "default",
   },
   // external: ["bluebird", "as-table", "chalk"],
-  plugins: [
-    resolve({ preferBuiltins: true }),
-    commonjs(),
-    json(),
-    externals(),
-    terser(),
-  ],
+  plugins: [resolve({ preferBuiltins: true }), commonjs(), json(), externals(), terser()],
 };

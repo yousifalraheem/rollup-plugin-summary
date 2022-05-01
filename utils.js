@@ -18,7 +18,8 @@ export function getFileSize(input) {
  * @returns {Promise<number>} Size in string format
  */
 export async function getMinifiedSize(text) {
-  return Buffer.byteLength((await minify(text)).code);
+  const minified = await minify(text);
+  return Buffer.byteLength(minified.code);
 }
 
 /**
