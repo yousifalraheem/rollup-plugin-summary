@@ -11,12 +11,14 @@ export default {
       rollupWarn(warning);
     }
   },
-  output: {
-    dir: "dist",
-    format: "cjs",
-    sourcemap: true,
-    exports: "default",
-  },
-  // external: ["bluebird", "as-table", "chalk"],
-  plugins: [resolve({ preferBuiltins: true }), commonjs(), json(), externals(), terser()],
+  output: [
+    {
+      dir: "dist",
+      format: "cjs",
+      sourcemap: true,
+      exports: "default",
+    },
+  ],
+  // external: ["brotli-size", "cli-table3", "filesize", "gzip-size", "terser"],
+  plugins: [resolve({ preferBuiltins: true }), commonjs(), json(), externals()],
 };

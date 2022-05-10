@@ -92,6 +92,13 @@ declare interface ValueDescriptor {
   coloredValue: string;
 }
 
+declare interface SummaryChunkEntry {
+  dir?: string;
+  file?: string;
+  format?: string;
+  summary: SummaryChunkInfo;
+}
+
 declare interface SummaryChunkInfo {
   fileName: string;
   size: ValueDescriptor;

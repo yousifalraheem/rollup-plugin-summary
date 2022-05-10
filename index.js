@@ -26,9 +26,13 @@ export default function (opts = {}) {
      * @return {Promise<void>}
      */
     generateBundle: async function (options, bundle) {
-      const { dir } = options;
-      if (!info.has(dir)) {
-        info.set(dir, []);
+      const identifierList = [];
+      options.dir && identifierList.push(options.dir);
+      options.file && identifierList.push(options.file);
+      options.format && identifierList.push(options.format);
+      const identifier = identifierList.length ? identifierList.join(" - ") : Date.now();
+      if (!info.has(identifier)) {
+        info.set(identifier, []);
       }
       /** @type {() => ValueDescriptor} */
       const defaultDescriptor = () => ({ value: 0, displayValue: "0 B", coloredValue: "0 B" });
@@ -92,10 +96,10 @@ export default function (opts = {}) {
             totals.brotli.displayValue = getFileSize(totals.brotli.value);
             totals.brotli.coloredValue = reportWarning(totals.brotli, ...warn);
           }
-          info.get(dir).push(chunkInfo);
+          info.get(identifier).push(chunkInfo);
         }
       }
-      info.get(dir).push(totals);
+      info.get(identifier).push(totals);
     },
     closeBundle: async function () {
       info.forEach((output, dir) => {
