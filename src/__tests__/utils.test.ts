@@ -1,3 +1,5 @@
+/// <reference types="../typings" />
+// jest.mock("gzip-size", () => ({ gzipSize: jest.fn().mockReturnValue(10) }));
 import {
   getFileSize,
   generateSeparator,
@@ -35,7 +37,7 @@ describe("Utility functions", () => {
       const row = Array(3).fill(filler);
       const table = Array(3).fill(row);
       const separatorRow = generateSeparator(table);
-      const dashes = separatorRow[0].match(/-+/g)[0];
+      const dashes = separatorRow[0].match(/-+/g)?.[0];
       expect(dashes).toHaveLength(filler.length);
     });
   });
@@ -87,7 +89,7 @@ describe("Utility functions", () => {
   });
 
   describe("color", () => {
-    const testCases = [
+    const testCases: Array<{ color: LogColors; colorCode: number }> = [
       { color: "black", colorCode: 30 },
       { color: "red", colorCode: 31 },
       { color: "green", colorCode: 32 },

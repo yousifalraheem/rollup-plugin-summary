@@ -1,6 +1,10 @@
-const summary = require("../dist");
+import commonjs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
+import externals from "rollup-plugin-node-externals";
+import { defineConfig } from "rollup";
+const { summary } = require("../dist");
 
-export default {
+const configs = defineConfig({
   input: "index.js",
   output: [
     {
@@ -17,6 +21,9 @@ export default {
     },
   ],
   plugins: [
+    commonjs(),
+    resolve(),
+    externals(),
     summary({
       warnLow: 200,
       warnHigh: 800,
@@ -27,4 +34,6 @@ export default {
       showGzippedSize: true,
     }),
   ],
-};
+});
+
+export default configs;

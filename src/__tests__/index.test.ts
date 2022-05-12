@@ -1,12 +1,15 @@
-import summary from "../";
-import bundles from "./bundles.json";
+/// <reference types="../typings" />
+
+// jest.mock("gzip-size", () => ({ gzipSize: jest.fn().mockReturnValue(10) }));
+import summary from "../index";
+import bundles from "../__mocks__/bundles.json";
+import { NormalizedOutputOptions } from "rollup";
 
 // eslint-disable-next-line no-control-regex
 const ansiRegex = /[\u001b\u009b][[()#;?]*(?:\d{1,4}(?:;\d{0,4})*)?[\dA-ORZcf-nqry=><]/g;
 
 describe("Rollup plugin summary", () => {
-  /** @type {any} */
-  const options = { dir: "temp/esm" };
+  const options: Partial<NormalizedOutputOptions> = { dir: "temp/esm" };
   const log = jest.fn();
   jest.spyOn(console, "log").mockImplementation(log);
 
@@ -21,13 +24,18 @@ describe("Rollup plugin summary", () => {
 
   it("Should generate summary correctly using defaults", async () => {
     const plugin = summary();
-    await plugin.generateBundle(options, bundles, true);
-    plugin.closeBundle();
+    await (plugin as any).generateBundle(options, bundles);
+    (plugin as any).closeBundle();
     expect(log).toHaveBeenCalledTimes(2);
-    expect(log).toHaveBeenNthCalledWith(1, "Build summary for", expect.stringContaining(options.dir));
+    expect(log).toHaveBeenNthCalledWith(
+      1,
+      "Build summary for",
+      expect.stringContaining(options.dir!),
+    );
 
-    /** @type {string[]} */
-    const outputTable = log.mock.calls[1][0].split("\n").map(i => i.replace(ansiRegex, ""));
+    const outputTable: string[] = (log.mock.calls[1][0] as string)
+      .split("\n")
+      .map(i => i.replace(ansiRegex, ""));
     // Column names
     expect(outputTable[1]).toContain("File name");
     expect(outputTable[1]).toContain("Size");
@@ -53,10 +61,11 @@ describe("Rollup plugin summary", () => {
       showGzippedSize: true,
       showMinifiedSize: true,
     });
-    await plugin.generateBundle(options, bundles, true);
-    plugin.closeBundle();
-    /** @type {string[]} */
-    const outputTable = log.mock.calls[1][0].split("\n").map(i => i.replace(ansiRegex, ""));
+    await (plugin as any).generateBundle(options, bundles);
+    (plugin as any).closeBundle();
+    const outputTable: string[] = (log.mock.calls[1][0] as string)
+      .split("\n")
+      .map(i => i.replace(ansiRegex, ""));
     // Column names
     expect(outputTable[1]).toContain("File name");
     expect(outputTable[1]).toContain("Size");

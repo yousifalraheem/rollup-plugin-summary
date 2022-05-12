@@ -2,23 +2,31 @@ import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
 import externals from "rollup-plugin-node-externals";
-import { terser } from "rollup-plugin-terser";
+import { defineConfig } from "rollup";
+import typescript from "@rollup/plugin-typescript";
+import pkg from "./package.json";
 
-export default {
-  input: "index.js",
-  onwarn(warning, rollupWarn) {
-    if (!["CIRCULAR_DEPENDENCY", "EVAL"].includes(warning.code)) {
-      rollupWarn(warning);
-    }
-  },
+const esModules = ["gzip-size"];
+/** @type {string[]} */
+const external = Object.keys(pkg.dependencies).filter(
+  ext => ext === esModules.includes("gzip-size"),
+);
+
+export default defineConfig({
+  input: "src/index.ts",
   output: [
     {
       dir: "dist",
       format: "cjs",
       sourcemap: true,
-      exports: "default",
+      exports: "named",
     },
   ],
-  // external: ["brotli-size", "cli-table3", "filesize", "gzip-size", "terser"],
-  plugins: [resolve({ preferBuiltins: true }), commonjs(), json(), externals()],
-};
+  external,
+  plugins: [resolve({ preferBuiltins: true }), commonjs(), json(), externals(), typescript()],
+  onwarn(warning, rollupWarn) {
+    if (!["CIRCULAR_DEPENDENCY", "EVAL"].includes(warning.code)) {
+      rollupWarn(warning);
+    }
+  },
+});

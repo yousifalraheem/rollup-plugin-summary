@@ -6,45 +6,50 @@ import {
   getBrotliSize,
   reportWarning,
   generateSeparator,
+  uuid,
   color,
 } from "./utils";
+import { Plugin } from "rollup";
 
-/**
- * Show summary of compiled files
- * @param {import('./index').SummaryOptions} opts Plugin options
- */
-export default function (opts = {}) {
-  /** @type {Map<string, SummaryChunkInfo[]>} */
-  const info = new Map();
+/** Prints out a summary of the rollup build */
+export function summary(
+  opts: SummaryOptions = {
+    warnLow: 5e3,
+    warnHigh: 1e4,
+    totalLow: 2e5,
+    totalHigh: 3e5,
+    showBrotliSize: false,
+    showGzippedSize: false,
+    showMinifiedSize: false,
+  },
+): Plugin {
+  const info = new Map<string, SummaryChunkInfo[]>();
 
   return {
     name: "rollup-plugin-summary",
-    /**
-     * @param {import('rollup').OutputOptions} options
-     * @param {Record<string, AssetInfo | ChunkInfo>} bundle
-     * @param {boolean} isWrite
-     * @return {Promise<void>}
-     */
     generateBundle: async function (options, bundle) {
       const identifierList = [];
       options.dir && identifierList.push(options.dir);
       options.file && identifierList.push(options.file);
       options.format && identifierList.push(options.format);
-      const identifier = identifierList.length ? identifierList.join(" - ") : Date.now();
+      const identifier = identifierList.length ? identifierList.join(" - ") : uuid();
       if (!info.has(identifier)) {
         info.set(identifier, []);
       }
-      /** @type {() => ValueDescriptor} */
-      const defaultDescriptor = () => ({ value: 0, displayValue: "0 B", coloredValue: "0 B" });
-      /** @type {SummaryChunkInfo} */
-      const totals = { fileName: "Totals", size: defaultDescriptor() };
-      for (let fileName in bundle) {
+      const defaultDescriptor = (): ValueDescriptor => ({
+        value: 0,
+        displayValue: "0 B",
+        coloredValue: "0 B",
+      });
+      const totals: SummaryChunkInfo = { fileName: "Totals", size: defaultDescriptor() };
+      for (const fileName in bundle) {
         if (bundle[fileName].type === "chunk") {
           const chunk = bundle[fileName];
-          const code = chunk.code;
-          const warn = [opts.warnLow, opts.warnHigh];
+          // TODO: Investigate this
+          const code = (chunk as any).code;
+          const warn: [number, number] = [opts.warnLow!, opts.warnHigh!];
           /** @type {SummaryChunkInfo} */
-          const chunkInfo = { fileName, size: defaultDescriptor() };
+          const chunkInfo: SummaryChunkInfo = { fileName, size: defaultDescriptor() };
           chunkInfo.size.value = Buffer.byteLength(code);
           chunkInfo.size.displayValue = getFileSize(chunkInfo.size.value);
           chunkInfo.size.coloredValue = reportWarning(chunkInfo.size, ...warn);
@@ -96,10 +101,10 @@ export default function (opts = {}) {
             totals.brotli.displayValue = getFileSize(totals.brotli.value);
             totals.brotli.coloredValue = reportWarning(totals.brotli, ...warn);
           }
-          info.get(identifier).push(chunkInfo);
+          info.get(identifier)!.push(chunkInfo);
         }
       }
-      info.get(identifier).push(totals);
+      info.get(identifier)!.push(totals);
     },
     closeBundle: async function () {
       info.forEach((output, dir) => {
@@ -116,20 +121,20 @@ export default function (opts = {}) {
 
         const printable = output.map(file => {
           const output = [file.fileName, file.size.coloredValue];
-          opts.showMinifiedSize && output.push(file.minified.coloredValue);
-          opts.showGzippedSize && output.push(file.gzipped.coloredValue);
-          opts.showBrotliSize && output.push(file.brotli.coloredValue);
+          opts.showMinifiedSize && output.push(file.minified!.coloredValue);
+          opts.showGzippedSize && output.push(file.gzipped!.coloredValue);
+          opts.showBrotliSize && output.push(file.brotli!.coloredValue);
           return output;
         });
-        const totalsRow = printable.pop();
+        const totalsRow: string[] = printable.pop()!;
 
         const separator = generateSeparator([
           headers,
           ...output.map(file => {
             const output = [file.fileName, file.size.displayValue];
-            opts.showMinifiedSize && output.push(file.minified.displayValue);
-            opts.showGzippedSize && output.push(file.gzipped.displayValue);
-            opts.showBrotliSize && output.push(file.brotli.displayValue);
+            opts.showMinifiedSize && output.push(file.minified!.displayValue);
+            opts.showGzippedSize && output.push(file.gzipped!.displayValue);
+            opts.showBrotliSize && output.push(file.brotli!.displayValue);
             return output;
           }),
         ]);
@@ -145,3 +150,5 @@ export default function (opts = {}) {
     },
   };
 }
+
+export default summary;

@@ -3,42 +3,25 @@ import fileSize from "filesize";
 import { gzipSize } from "gzip-size";
 import brotli from "brotli-size";
 
-/**
- * @param {string | number} input
- * @returns {string} Size in string format
- */
-export function getFileSize(input) {
-  /** @type {number} */
+export function getFileSize(input: string | number): string {
   const length = typeof input === "string" ? Buffer.byteLength(input) : input;
   return fileSize(length);
 }
 
-/**
- * @param {string} text
- * @returns {Promise<number>} Size in string format
- */
-export async function getMinifiedSize(text) {
+export async function getMinifiedSize(text: string): Promise<number> {
   const minified = await minify(text);
-  return Buffer.byteLength(minified.code);
+  return Buffer.byteLength(minified.code || "");
 }
 
-/**
- * @param {string} text
- * @returns {Promise<number>} Size in string format
- */
-export async function getGzippedSize(text) {
+export async function getGzippedSize(text: string): Promise<number> {
   return await gzipSize(text);
 }
 
-/**
- * @param {string} text
- * @return {Promise<number>} Size in string format
- */
-export async function getBrotliSize(text) {
+export async function getBrotliSize(text: string): Promise<number> {
   return brotli(text);
 }
 
-export const color = {
+export const color: Record<LogColors, (str: string) => string> = {
   black: str => `\x1b[30m${str}\x1b[0m`,
   red: str => `\x1b[31m${str}\x1b[0m`,
   green: str => `\x1b[32m${str}\x1b[0m`,
@@ -50,13 +33,7 @@ export const color = {
   gray: str => `\x1b[90m${str}\x1b[0m`,
 };
 
-/**
- * @param {ValueDescriptor} descriptor
- * @param {number} warnLow
- * @param {number} warnHigh
- * @return {string} Colors string output
- */
-export function reportWarning(descriptor, warnLow, warnHigh) {
+export function reportWarning(descriptor: ValueDescriptor, warnLow: number, warnHigh: number) {
   switch (true) {
     case descriptor.value > warnHigh:
       return color.red(descriptor.displayValue);
@@ -67,14 +44,9 @@ export function reportWarning(descriptor, warnLow, warnHigh) {
   }
 }
 
-/**
- * @param {string[][]} list
- * @return {string[]} The separator row
- */
-export function generateSeparator(list) {
+export function generateSeparator(list: string[][]) {
   const numOfColumns = list[0].length;
-  /** @type {string[]} */
-  const output = Array(numOfColumns).fill("-");
+  const output: string[] = Array(numOfColumns).fill("-");
   list.forEach(row => {
     row.forEach((str, i) => {
       if (str.length > output[i].length) {
@@ -83,4 +55,8 @@ export function generateSeparator(list) {
     });
   });
   return output.map(i => color.gray(i));
+}
+
+export function uuid(): string {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
