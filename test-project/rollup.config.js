@@ -2,6 +2,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import externals from "rollup-plugin-node-externals";
 import { defineConfig } from "rollup";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { summary } = require("../dist");
 
 const configs = defineConfig({

@@ -9,7 +9,7 @@ import {
   uuid,
   color,
 } from "./utils";
-import { Plugin } from "rollup";
+import { OutputChunk, Plugin } from "rollup";
 
 /** Prints out a summary of the rollup build */
 export function summary(
@@ -46,8 +46,8 @@ export function summary(
         if (bundle[fileName].type === "chunk") {
           const chunk = bundle[fileName];
           // TODO: Investigate this
-          const code = (chunk as any).code;
-          const warn: [number, number] = [opts.warnLow!, opts.warnHigh!];
+          const code = (chunk as OutputChunk).code;
+          const warn: [number, number] = [opts.warnLow || 0, opts.warnHigh || 0];
           /** @type {SummaryChunkInfo} */
           const chunkInfo: SummaryChunkInfo = { fileName, size: defaultDescriptor() };
           chunkInfo.size.value = Buffer.byteLength(code);

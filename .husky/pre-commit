@@ -1,7 +1,9 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo eslint --fix . &&
+eslint --fix . &&
+npm run lint &&
 echo "✅ eslint finished successfully" &&
 prettier --write --ignore-unknown . &&
+prettier --check . &&
 echo "✅ Prettier finished successfully"
