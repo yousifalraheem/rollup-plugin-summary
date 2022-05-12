@@ -1,16 +1,12 @@
 {
   "name": "test-project",
   "version": "1.0.0",
+  "description": "Test project",
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "scripts": {
-    "test": "rollup -c",
-    "posttest": "rm -rf temp"
-  },
-  "dependencies": {
-    "@babel/core": "^7.11.4",
-    "@babel/preset-env": "^7.11.0",
-    "@rollup/plugin-commonjs": "^21.0.3",
-    "@rollup/plugin-node-resolve": "^13.1.3",
-    "rollup": "^2.70.1"
+    "build": "rollup -c"
   }
 }

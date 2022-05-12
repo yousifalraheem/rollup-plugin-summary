@@ -32,4 +32,6 @@ Here is an example of how it's used:
 
 <br/>
 
-<small>**Note:** File sizes will be evaluated against **high** values first. For example, if you've set `warnLow` and `warnHigh` to the same value, the files exceeding that number will be highlighted in red since the `warnHigh` is prioritized. Same goes for `totalLow` and `totalHigh`</small>
+<small>**Note:** File sizes will be evaluated against **high** values first. For example, if you've set `warnLow`
+and `warnHigh` to the same value, the files exceeding that number will be highlighted in red since the `warnHigh` is
+prioritized. Same goes for `totalLow` and `totalHigh`</small>

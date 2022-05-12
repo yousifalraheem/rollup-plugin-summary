@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Installing dependencies
-        run: npm ci && npm ci --prefix test-project
+        run: npm ci
       - name: Checking formatting with Prettier
         run: npm run format:check
       - name: Checking code with ESLint

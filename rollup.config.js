@@ -2,29 +2,31 @@ import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import resolve from "@rollup/plugin-node-resolve";
 import externals from "rollup-plugin-node-externals";
-import filesize from "rollup-plugin-filesize";
-import { terser } from "rollup-plugin-terser";
+import { defineConfig } from "rollup";
+import typescript from "@rollup/plugin-typescript";
+import pkg from "./package.json";
 
-export default {
-  input: "index.js",
+const esModules = ["gzip-size"];
+/** @type {string[]} */
+const external = Object.keys(pkg.dependencies).filter(
+  ext => ext === esModules.includes("gzip-size"),
+);
+
+export default defineConfig({
+  input: "src/index.ts",
+  output: [
+    {
+      dir: "dist",
+      format: "cjs",
+      sourcemap: true,
+      exports: "named",
+    },
+  ],
+  external,
+  plugins: [resolve({ preferBuiltins: true }), commonjs(), json(), externals(), typescript()],
   onwarn(warning, rollupWarn) {
     if (!["CIRCULAR_DEPENDENCY", "EVAL"].includes(warning.code)) {
       rollupWarn(warning);
     }
   },
-  output: {
-    dir: "dist",
-    format: "cjs",
-    sourcemap: true,
-    exports: "default",
-  },
-  external: ["bluebird", "rollup-plugin-filesize", "as-table", "chalk"],
-  plugins: [
-    resolve({ preferBuiltins: true }),
-    commonjs(),
-    json(),
-    externals(),
-    filesize({ showBrotliSize: true }),
-    terser(),
-  ],
-};
+});

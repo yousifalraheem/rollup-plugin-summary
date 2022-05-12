@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { readFileSync, writeFileSync } = require("fs");
 const { removeSync, copySync } = require("fs-extra");
 const { resolve } = require("path");
@@ -24,7 +25,9 @@ const PreDocs = {
     const docsIndexStr = readFileSync(index).toString();
 
     const newDocs = (
-      readmeStr.split(readmeStr.match(/(<!-- github-only-start -->)([\s\S]*)(<!-- github-only-end -->)/gm)).join("") +
+      readmeStr
+        .split(readmeStr.match(/(<!-- github-only-start -->)([\s\S]*)(<!-- github-only-end -->)/gm))
+        .join("") +
       "\n" +
       docsIndexStr +
       licenseStr

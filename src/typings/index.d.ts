@@ -1,13 +1,3 @@
-import { Plugin } from "rollup";
-
-declare interface SummaryPrint {
-  Name: string;
-  Size: string;
-  Minified: string;
-  Gzipped: string;
-  Brotli: string;
-}
-
 declare interface SummaryOptions {
   /**
    * Minimum size in bytes to be highlighted in yellow.
@@ -54,8 +44,29 @@ declare interface SummaryOptions {
   showGzippedSize?: boolean;
 }
 
-/**
- * Prints out a summary of the rollup build
- * @param {SummaryOptions} options Summary plugin options
- */
-export default function summary(options?: SummaryOptions): Plugin;
+declare interface ValueDescriptor {
+  value: number;
+  displayValue: string;
+  coloredValue: string;
+}
+
+declare interface SummaryChunkInfo {
+  fileName: string;
+  size: ValueDescriptor;
+  minified?: ValueDescriptor;
+  gzipped?: ValueDescriptor;
+  brotli?: ValueDescriptor;
+}
+
+declare type LogColors =
+  | "black"
+  | "red"
+  | "green"
+  | "yellow"
+  | "blue"
+  | "magenta"
+  | "cyan"
+  | "white"
+  | "gray";
+
+declare function summary(opts?: SummaryOptions): import("rollup").Plugin;
