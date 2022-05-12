@@ -8,23 +8,12 @@
     "outDir": "dist",
     "target": "ES2016",
     "strict": true,
-    "lib": [
-      "ESNext"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "types": [
-      "node",
-      "jest"
-    ],
+    "lib": ["ESNext"],
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node", "jest"],
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "exclude": [
-    "**/*.test.*",
-    "**/__mocks_/*",
-    "**/__tests__/*"
-  ]
+  "exclude": ["**/*.test.*", "**/__mocks_/*", "**/__tests__/*"]
 }
