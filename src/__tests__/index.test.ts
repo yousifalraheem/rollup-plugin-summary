@@ -8,6 +8,7 @@ import { NormalizedOutputOptions } from "rollup";
 // eslint-disable-next-line no-control-regex
 const ansiRegex = /[\u001b\u009b][[()#;?]*(?:\d{1,4}(?:;\d{0,4})*)?[\dA-ORZcf-nqry=><]/g;
 
+// TODO: add test to check if the output will use the default warning values when it's not passed, or an empty object was passed
 describe("Rollup plugin summary", () => {
   const options: Partial<NormalizedOutputOptions> = { dir: "temp/esm" };
   const log = jest.fn();
