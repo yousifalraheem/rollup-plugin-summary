@@ -8,9 +8,7 @@ import pkg from "./package.json";
 
 const esModules = ["gzip-size"];
 /** @type {string[]} */
-const external = Object.keys(pkg.dependencies).filter(
-  ext => ext === esModules.includes("gzip-size"),
-);
+const external = Object.keys(pkg.dependencies).filter(ext => !esModules.includes(ext));
 
 export default defineConfig({
   input: "src/index.ts",
