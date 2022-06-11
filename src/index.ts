@@ -105,7 +105,7 @@ export function summary({
       info.get(identifier)!.push(totals);
     },
     closeBundle: async function () {
-      const [ dir, output ]: [ dir: string, output: SummaryChunkInfo[]] = info.entries().next().value;
+      const [dir, output]: [dir: string, output: SummaryChunkInfo[]] = info.entries().next().value;
       /** @type {string[]} */
       const headers = ["File name", "Size"];
       showMinifiedSize && headers.push("Minified");
