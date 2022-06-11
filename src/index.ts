@@ -31,9 +31,8 @@ export function summary({
       options.file && identifierList.push(options.file);
       options.format && identifierList.push(options.format);
       const identifier = identifierList.length ? identifierList.join(" - ") : uuid();
-      if (!info.has(identifier)) {
-        info.set(identifier, []);
-      }
+      info.clear();
+      info.set(identifier, []);
       const defaultDescriptor = (): ValueDescriptor => ({
         value: 0,
         displayValue: "0 B",
@@ -106,46 +105,45 @@ export function summary({
       info.get(identifier)!.push(totals);
     },
     closeBundle: async function () {
-      info.forEach((output, dir) => {
-        /** @type {string[]} */
-        const headers = ["File name", "Size"];
-        showMinifiedSize && headers.push("Minified");
-        showGzippedSize && headers.push("Gzipped");
-        showBrotliSize && headers.push("Brotli");
-        const table = new Table({
-          head: headers,
-          chars: { mid: "", "left-mid": "", "mid-mid": "", "right-mid": "" },
-          style: { head: ["blue"] },
-        });
-
-        const printable = output.map(file => {
-          const output = [file.fileName, file.size.coloredValue];
-          showMinifiedSize && output.push(file.minified!.coloredValue);
-          showGzippedSize && output.push(file.gzipped!.coloredValue);
-          showBrotliSize && output.push(file.brotli!.coloredValue);
-          return output;
-        });
-        const totalsRow: string[] = printable.pop()!;
-
-        const separator = generateSeparator([
-          headers,
-          ...output.map(file => {
-            const output = [file.fileName, file.size.displayValue];
-            showMinifiedSize && output.push(file.minified!.displayValue);
-            showGzippedSize && output.push(file.gzipped!.displayValue);
-            showBrotliSize && output.push(file.brotli!.displayValue);
-            return output;
-          }),
-        ]);
-
-        table.push(separator);
-        table.push(...printable);
-        table.push(separator);
-        table.push(totalsRow);
-
-        console.log("Build summary for", color.cyan(dir));
-        console.log(table.toString());
+      const [ dir, output ]: [ dir: string, output: SummaryChunkInfo[]] = info.entries().next().value;
+      /** @type {string[]} */
+      const headers = ["File name", "Size"];
+      showMinifiedSize && headers.push("Minified");
+      showGzippedSize && headers.push("Gzipped");
+      showBrotliSize && headers.push("Brotli");
+      const table = new Table({
+        head: headers,
+        chars: { mid: "", "left-mid": "", "mid-mid": "", "right-mid": "" },
+        style: { head: ["blue"] },
       });
+
+      const printable = output.map(file => {
+        const output = [file.fileName, file.size.coloredValue];
+        showMinifiedSize && output.push(file.minified!.coloredValue);
+        showGzippedSize && output.push(file.gzipped!.coloredValue);
+        showBrotliSize && output.push(file.brotli!.coloredValue);
+        return output;
+      });
+      const totalsRow: string[] = printable.pop()!;
+
+      const separator = generateSeparator([
+        headers,
+        ...output.map(file => {
+          const output = [file.fileName, file.size.displayValue];
+          showMinifiedSize && output.push(file.minified!.displayValue);
+          showGzippedSize && output.push(file.gzipped!.displayValue);
+          showBrotliSize && output.push(file.brotli!.displayValue);
+          return output;
+        }),
+      ]);
+
+      table.push(separator);
+      table.push(...printable);
+      table.push(separator);
+      table.push(totalsRow);
+
+      console.log("Build summary for", color.cyan(dir));
+      console.log(table.toString());
     },
   };
 }
