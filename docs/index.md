@@ -10,9 +10,9 @@ These are the available options:
 | warnHigh?         | `number`  | Minimum size in bytes to be highlighted in red.<br><sub>This is used to alert <span style="color: #dc3545;">(in red)</span> about files that exceeded the acceptable pre-defined file size</sub>                                     | `10000`  |
 | totalLow?         | `number`  | Minimum total size in bytes to be highlighted in yellow.<br><sub>This is used to warn <span style="color: #ffcd39;">(in yellow)</span> about the total build size if it comes nearly below maximum acceptable pre-defined size</sub> | `200000` |
 | totalHigh?        | `number`  | Minimum total size in bytes to be highlighted in red.<br><sub>This is used to alert <span style="color: #dc3545;">(in red)</span> about the total build size if it exceeds the acceptable pre-defined size</sub>                     | `300000` |
-| showBrotliSize?   | `boolean` | Should calculate and show Brotli size                                                                                                                                                                                                | `true`   |
-| showMinifiedSize? | `boolean` | Should calculate and show Minified size                                                                                                                                                                                              | `true`   |
-| showGzippedSize?  | `boolean` | Should calculate and show Gipped size                                                                                                                                                                                                | `true`   |
+| showBrotliSize?   | `boolean` | Should calculate and show Brotli size                                                                                                                                                                                                | `false`  |
+| showMinifiedSize? | `boolean` | Should calculate and show Minified size                                                                                                                                                                                              | `false`  |
+| showGzippedSize?  | `boolean` | Should calculate and show Gipped size                                                                                                                                                                                                | `false`  |
 
 <br/>
 
