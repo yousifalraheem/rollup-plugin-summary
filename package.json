@@ -42,7 +42,7 @@
   "dependencies": {
     "brotli-size": "^4.0.0",
     "cli-table3": "^0.6.3",
-    "filesize": "^8.0.7",
+    "filesize": "^10.0.5",
     "gzip-size": "^7.0.0",
     "terser": "^5.15.1"
   },

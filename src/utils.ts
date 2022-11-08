@@ -1,11 +1,11 @@
 import { minify } from "terser";
-import fileSize from "filesize";
+import { filesize } from "filesize";
 import { gzipSize } from "gzip-size";
 import brotli from "brotli-size";
 
 export function getFileSize(input: string | number): string {
   const length = typeof input === "string" ? Buffer.byteLength(input) : input;
-  return fileSize(length);
+  return filesize(length) as string;
 }
 
 export async function getMinifiedSize(text: string): Promise<number> {
