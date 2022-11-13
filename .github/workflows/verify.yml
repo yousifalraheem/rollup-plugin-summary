@@ -32,6 +32,6 @@ jobs:
       - name: Running tests
         run: npm test
       - name: Testing the package in a temporary project
-        run: npm run test:project
+        run: npm i --prefix test-project && npm run test:project
       - name: Building the documentation
         run: npm run build:docs
