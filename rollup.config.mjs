@@ -20,7 +20,7 @@ export default defineConfig({
       file: pkg.main,
       exports: "named",
       footer: "module.exports = Object.assign(exports.default, exports);",
-      sourcemap: true
+      sourcemap: true,
     },
     {
       format: "es",
@@ -32,13 +32,13 @@ export default defineConfig({
             this.emitFile({
               type: "asset",
               fileName: "package.json",
-              source: `{"type":"module"}`
+              source: `{"type":"module"}`,
             });
-          }
-        }
+          },
+        },
       ],
-      sourcemap: true
-    }
+      sourcemap: true,
+    },
   ],
   external,
   plugins: [
@@ -46,11 +46,11 @@ export default defineConfig({
     commonjs(),
     json(),
     externals(),
-    typescript({ sourceMap: true })
+    typescript({ sourceMap: true }),
   ],
   onwarn(warning, rollupWarn) {
     if (!["CIRCULAR_DEPENDENCY", "EVAL"].includes(warning.code)) {
       rollupWarn(warning);
     }
-  }
+  },
 });
