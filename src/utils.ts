@@ -18,7 +18,8 @@ export async function getGzippedSize(text: string): Promise<number> {
 }
 
 export async function getBrotliSize(text: string): Promise<number> {
-  return brotli(text);
+  const brotliSize = (brotli as any).default || brotli;
+  return brotliSize(text);
 }
 
 export const color: Record<LogColors, (str: string) => string> = {
