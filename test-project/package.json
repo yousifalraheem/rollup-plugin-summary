@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "description": "Test project",
   "main": "index.js",
+  "type": "module",
   "files": [
     "index.js"
   ],
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "test": "rollup -c"
+  },
+  "dependencies": {
+    "rollup-plugin-summary": "file:../dist"
   }
 }
