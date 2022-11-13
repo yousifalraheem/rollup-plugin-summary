@@ -21,7 +21,13 @@ const PreRelease = {
     unwantedPkgKeys.map(key => {
       delete pkg[key];
     });
-    pkg.main = "index.js";
+    pkg.main = "./cjs/index.js";
+    pkg.module = "./es/index.js";
+    pkg.exports = {
+      import: "./es/index.js",
+      types: "./index.d.ts",
+      default: "./cjs/index.js",
+    };
     writeFileSync(resolve(dist, "package.json"), JSON.stringify(pkg, null, 4));
     console.info("✅ Created package.json in dist folder");
     return this;
