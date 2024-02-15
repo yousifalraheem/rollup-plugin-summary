@@ -1,9 +1,9 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-eslint --fix . &&
+npx eslint --fix . &&
 npm run lint &&
 echo "✅ eslint finished successfully" &&
-prettier --write --ignore-unknown . &&
-prettier --check . &&
+npx prettier --write --ignore-unknown . &&
+npx prettier --check . &&
 echo "✅ Prettier finished successfully"
