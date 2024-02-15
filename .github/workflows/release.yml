@@ -12,10 +12,11 @@ jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 14
+          node-version: "lts/*"
+          check-latest: false
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
@@ -27,6 +28,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - uses: codecov/codecov-action@v1.0.13
+      - uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
