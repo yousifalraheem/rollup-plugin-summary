@@ -42,9 +42,9 @@ Please follow these steps to have your contribution considered by the maintainer
 4. Make sure that your changes adhere to the current coding conventions used throughout the project - indentation, accurate comments, etc.
 5. Commit your changes in logical chunks. Use the project's commit conventions. If the project uses the [Angular commit conventions](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines), your commit message header should look something like this:
 
-    ```
-    <type>: <short summary>
-    ```
+   ```
+   <type>: <short summary>
+   ```
 
    Please ensure your commit message clearly describes the nature of the change. This helps reviewers to understand your pull request and aids in seamless integration.
 
