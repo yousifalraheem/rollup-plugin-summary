@@ -7,6 +7,7 @@
 [![Release](https://github.com/yousifalraheem/rollup-plugin-summary/actions/workflows/release.yml/badge.svg)](https://github.com/yousifalraheem/rollup-plugin-summary/actions/workflows/release.yml)
 
 # rollup-plugin-summary
+
 A rollup plugin that summarizes the output of the build.
 
 <img src="docs/assets/sample_output.png" alt="Sample output" />
@@ -25,6 +26,12 @@ npm i -D rollup-plugin-summary
 
 ```terminal
 yarn add -D rollup-plugin-summary
+```
+
+### pnpm
+
+```terminal
+pnpm add -D rollup-plugin-summary
 ```
 
 <hr/>

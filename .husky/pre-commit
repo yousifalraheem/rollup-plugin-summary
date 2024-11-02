@@ -1,6 +1,7 @@
+#!/bin/bash
+
 npx eslint --fix . &&
 npm run lint &&
 echo "✅ eslint finished successfully" &&
 npx prettier --write --ignore-unknown . &&
-npx prettier --check . &&
 echo "✅ Prettier finished successfully"
