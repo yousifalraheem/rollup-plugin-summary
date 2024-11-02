@@ -27,9 +27,9 @@ export function summary({
     name: "rollup-plugin-summary",
     generateBundle: async function (options, bundle) {
       const identifierList = [];
-      if (options.dir) identifierList.push(options.dir);
-      if (options.file) identifierList.push(options.file);
-      if (options.format) identifierList.push(options.format);
+      options.dir && identifierList.push(options.dir);
+      options.file && identifierList.push(options.file);
+      options.format && identifierList.push(options.format);
       const identifier = identifierList.length ? identifierList.join(" - ") : uuid();
       if (!info.has(identifier)) {
         info.set(identifier, []);
@@ -109,9 +109,9 @@ export function summary({
       info.forEach((output, dir) => {
         /** @type {string[]} */
         const headers = ["File name", "Size"];
-        if (showMinifiedSize) headers.push("Minified");
-        if (showGzippedSize) headers.push("Gzipped");
-        if (showBrotliSize) headers.push("Brotli");
+        showMinifiedSize && headers.push("Minified");
+        showGzippedSize && headers.push("Gzipped");
+        showBrotliSize && headers.push("Brotli");
         const table = new Table({
           head: headers,
           chars: { mid: "", "left-mid": "", "mid-mid": "", "right-mid": "" },
@@ -120,9 +120,9 @@ export function summary({
 
         const printable = output.map(file => {
           const output = [file.fileName, file.size.coloredValue];
-          if (showMinifiedSize) output.push(file.minified!.coloredValue);
-          if (showGzippedSize) output.push(file.gzipped!.coloredValue);
-          if (showBrotliSize) output.push(file.brotli!.coloredValue);
+          showMinifiedSize && output.push(file.minified!.coloredValue);
+          showGzippedSize && output.push(file.gzipped!.coloredValue);
+          showBrotliSize && output.push(file.brotli!.coloredValue);
           return output;
         });
         const totalsRow: string[] = printable.pop()!;
@@ -131,9 +131,9 @@ export function summary({
           headers,
           ...output.map(file => {
             const output = [file.fileName, file.size.displayValue];
-            if (showMinifiedSize) output.push(file.minified!.displayValue);
-            if (showGzippedSize) output.push(file.gzipped!.displayValue);
-            if (showBrotliSize) output.push(file.brotli!.displayValue);
+            showMinifiedSize && output.push(file.minified!.displayValue);
+            showGzippedSize && output.push(file.gzipped!.displayValue);
+            showBrotliSize && output.push(file.brotli!.displayValue);
             return output;
           }),
         ]);

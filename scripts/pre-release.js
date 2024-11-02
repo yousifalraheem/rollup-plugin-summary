@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { copyFileSync, writeFileSync, readFileSync } = require("fs");
 const { resolve } = require("path");
 const pkg = require("../package.json");
