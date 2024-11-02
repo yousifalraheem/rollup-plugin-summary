@@ -7,7 +7,6 @@
 [![Release](https://github.com/yousifalraheem/rollup-plugin-summary/actions/workflows/release.yml/badge.svg)](https://github.com/yousifalraheem/rollup-plugin-summary/actions/workflows/release.yml)
 
 # rollup-plugin-summary
-
 A rollup plugin that summarizes the output of the build.
 
 <img src="docs/assets/sample_output.png" alt="Sample output" />
