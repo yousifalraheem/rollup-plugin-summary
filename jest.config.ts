@@ -1,8 +1,8 @@
-import { InitialOptionsTsJest } from "ts-jest";
+import type { JestConfigWithTsJest } from "ts-jest";
 
 const esModules = ["gzip-size"].join("|");
 
-const config: InitialOptionsTsJest = {
+const config: JestConfigWithTsJest = {
   roots: ["<rootDir>/src"],
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{js,ts}"],
