@@ -146,6 +146,7 @@ export function summary({
         console.log("Build summary for", color.cyan(dir));
         console.log(table.toString());
       });
+      info.clear();
     },
   };
 }
